@@ -5,9 +5,16 @@
 #ifndef INC_4PCHESS_GAME_H
 #define INC_4PCHESS_GAME_H
 
+#include "./Pieces/Piece.h"
+#include "Player.h"
 
 class Game {
+    private:
+        Piece ***board;
+        Player players[4];
 
+    public:
+        Game() {};
 };
 
 

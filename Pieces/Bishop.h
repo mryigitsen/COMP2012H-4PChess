@@ -6,7 +6,7 @@
 #define INC_4PCHESS_BISHOP_H
 
 
-class Bishop {
+class Bishop : public Piece {
 
 };
 

@@ -6,7 +6,7 @@
 #define INC_4PCHESS_KING_H
 
 
-class King {
+class King : public Piece {
 
 };
 

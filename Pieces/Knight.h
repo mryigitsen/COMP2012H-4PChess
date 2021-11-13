@@ -6,7 +6,7 @@
 #define INC_4PCHESS_KNIGHT_H
 
 
-class Knight {
+class Knight : public Piece {
 
 };
 

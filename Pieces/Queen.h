@@ -6,7 +6,7 @@
 #define INC_4PCHESS_QUEEN_H
 
 
-class Queen {
+class Queen : public Piece{
 
 };
 

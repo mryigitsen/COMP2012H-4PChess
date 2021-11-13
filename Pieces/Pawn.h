@@ -6,7 +6,7 @@
 #define INC_4PCHESS_PAWN_H
 
 
-class Pawn {
+class Pawn : public Piece{
 
 };
 

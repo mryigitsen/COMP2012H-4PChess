@@ -6,7 +6,7 @@
 #define INC_4PCHESS_ROOK_H
 
 
-class Rook {
+class Rook : public Piece {
 
 };
 

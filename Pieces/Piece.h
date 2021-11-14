@@ -5,8 +5,16 @@
 #ifndef INC_4PCHESS_PIECE_H
 #define INC_4PCHESS_PIECE_H
 #include <string>
-class Player;
-class Game;
+//class Player;
+//class Game;
+#include "../Game.h"
+#include "../Player.h"
+#include "./Bishop.h"
+#include "./King.h"
+#include "./Knight.h"
+#include "./Pawn.h"
+#include "./Queen.h"
+#include "./Rook.h"
 
 class Piece {
     public:
@@ -25,17 +33,15 @@ class Piece {
 
         virtual int get_point() const = 0;
 
+        virtual void list_possible_moves() = 0;
+
     protected:
-        explicit Piece(Player &player, Game &game);
+        explicit Piece(Player &player, Game &game, Game::Coordinates coordinates);
 
         Player &player;
-        Game &game
+        Game &game;
 
-    private:
-
-
-    };
-
+        Game::Coordinates coordinates;
 };
 
 

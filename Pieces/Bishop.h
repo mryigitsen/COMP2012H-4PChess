@@ -7,7 +7,11 @@
 
 
 class Bishop : public Piece {
-
+    public:
+        Bishop(Player& player, Game& game);
+        virtual Piece::Type get_type(); 
+        virtual int get_point() const;
+        virtual void list_possible_moves();
 };
 
 

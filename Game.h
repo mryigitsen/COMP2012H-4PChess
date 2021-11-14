@@ -9,12 +9,25 @@
 #include "Player.h"
 
 class Game {
-    private:
-        Piece ***board;
-        Player players[4];
-
     public:
-        Game() {};
+        struct Tile{
+            Piece* piece;
+            bool is_activated;
+        };
+
+        Game();
+        int get_current_turn() const;
+        void next_turn(); 
+
+    private:
+        Tile board[14][14];
+        Player players[4];
+        int player_turn;
+        
+        struct Coordinates{
+            int x_coordinate;
+            int y_coordinate;
+        };
 };
 
 

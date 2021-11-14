@@ -7,7 +7,20 @@
 
 
 class Player {
+    public:
+        enum class Direction{
+            UP,
+            DOWN,
+            LEFT,
+            RIGHT,
 
+            DIRECTION
+        };
+
+    private:
+        bool is_active;
+        int score;
+        Direction direction;
 };
 
 

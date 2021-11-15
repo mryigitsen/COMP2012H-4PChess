@@ -5,18 +5,18 @@
 #ifndef INC_4PCHESS_PIECE_H
 #define INC_4PCHESS_PIECE_H
 #include <string>
-//class Player;
-//class Game;
-#include "../Game.h"
 #include "../Player.h"
-#include "./Bishop.h"
-#include "./King.h"
-#include "./Knight.h"
-#include "./Pawn.h"
-#include "./Queen.h"
-#include "./Rook.h"
+class Game;
+class Player;
+
 
 class Piece {
+protected:
+    explicit Piece(Player &player, Game &game);
+
+    Player &player;
+    Game &game;
+
     public:
         enum class Type {
             BISHOP = 1,
@@ -27,6 +27,8 @@ class Piece {
             ROOK = 6
         };
 
+        int which_player();
+
         virtual ~Piece() = default;
 
         virtual Piece::Type get_type() const = 0;
@@ -35,13 +37,6 @@ class Piece {
 
         virtual void list_possible_moves() = 0;
 
-    protected:
-        explicit Piece(Player &player, Game &game, Game::Coordinates coordinates);
-
-        Player &player;
-        Game &game;
-
-        Game::Coordinates coordinates;
 };
 
 

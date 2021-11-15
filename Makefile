@@ -8,15 +8,15 @@ LDFLAGS :=
 ifeq (Windows_NT, $(OS))
 
 RM := del
-SRCS := Game.cpp main.cpp Player.cpp Pieces\Piece.cpp Pieces\Bishop.cpp Pieces\King.cpp Pieces\Knight.cpp Pieces\Pawn.cpp Pieces\Queen.cpp Pieces\Rock.cpp
-SUBMISSION := Game.cpp main.cpp Player.cpp Pieces\Piece.cpp Pieces\Bishop.cpp Pieces\King.cpp Pieces\Knight.cpp Pieces\Pawn.cpp Pieces\Queen.cpp Pieces\Rock.cpp Game.h Player.h Pieces\Piece.h Pieces\Bishop.h Pieces\King.h Pieces\Knight.h Pieces\Pawn.h Pieces\Queen.h Pieces\Rock.h
+SRCS := Game.cpp main.cpp Player.cpp pieces/Piece.cpp pieces/Bishop.cpp pieces/King.cpp pieces/Knight.cpp pieces/Pawn.cpp pieces/Queen.cpp pieces/Rook.cpp
+SUBMISSION := Game.cpp main.cpp Player.cpp pieces/Piece.cpp pieces/Bishop.cpp pieces/King.cpp pieces/Knight.cpp pieces/Pawn.cpp pieces/Queen.cpp pieces/Rook.cpp Game.h Player.h pieces/Piece.h pieces/Bishop.h pieces/King.h pieces/Knight.h pieces/Pawn.h pieces/Queen.h pieces/Rook.h
 ZIP := zip.exe
 
 else
 
 RM := rm -f
-SRCS := Game.cpp main.cpp Player.cpp Pieces\Piece.cpp Pieces\Bishop.cpp Pieces\King.cpp Pieces\Knight.cpp Pieces\Pawn.cpp Pieces\Queen.cpp Pieces\Rock.cpp
-SUBMISSION := Game.cpp main.cpp Player.cpp Pieces\Piece.cpp Pieces\Bishop.cpp Pieces\King.cpp Pieces\Knight.cpp Pieces\Pawn.cpp Pieces\Queen.cpp Pieces\Rock.cpp Game.h Player.h Pieces\Piece.h Pieces\Bishop.h Pieces\King.h Pieces\Knight.h Pieces\Pawn.h Pieces\Queen.h Pieces\Rock.h
+SRCS := Game.cpp main.cpp Player.cpp pieces/Piece.cpp pieces/Bishop.cpp pieces/King.cpp pieces/Knight.cpp pieces/Pawn.cpp pieces/Queen.cpp pieces/Rook.cpp
+SUBMISSION := Game.cpp main.cpp Player.cpp pieces/Piece.cpp pieces/Bishop.cpp pieces/King.cpp pieces/Knight.cpp pieces/Pawn.cpp pieces/Queen.cpp pieces/Rook.cpp Game.h Player.h pieces/Piece.h pieces/Bishop.h pieces/King.h pieces/Knight.h pieces/Pawn.h pieces/Queen.h pieces/Rook.h
 ZIP := zip
 
 endif

@@ -7,7 +7,12 @@
 
 
 class Player {
-    public:
+private:
+    bool is_active;
+    int score;
+    int indexNum;
+
+public:
         enum class Direction{
             UP,
             DOWN,
@@ -16,11 +21,9 @@ class Player {
 
             DIRECTION
         };
+    void set_index(int index);
+    int get_index();
 
-    private:
-        bool is_active;
-        int score;
-        Direction direction;
 };
 
 

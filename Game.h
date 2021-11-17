@@ -25,8 +25,14 @@ class Game {
         int get_current_turn() const;
         void next_turn(); 
         void print_board();
-    private:
-        Tile board[14][14];
+        void delete_piece(int x, int y);
+    Tile board[14][14];
+    bool in_boundaries( int x, int y);
+    Piece* get_piece(int x, int y);
+    void movePiece(int initX, int initY, int destX, int destY);
+
+
+private:
         Player players[4];
         int player_turn;
         ~Game();

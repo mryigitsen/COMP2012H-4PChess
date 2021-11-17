@@ -3,7 +3,7 @@
 //
 
 #include "Knight.h"
-Knight::Knight(Player& player, Game& game): Piece(player, game) {}
+Knight::Knight(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
 
 Piece::Type Knight::get_type() const{
     return Piece::Type::KNIGHT;

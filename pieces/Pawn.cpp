@@ -3,7 +3,8 @@
 //
 
 #include "Pawn.h"
-Pawn::Pawn(Player& player, Game& game): Piece(player, game) {}
+Pawn::Pawn(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
+
 
 Piece::Type Pawn::get_type() const {
     return Piece::Type::PAWN;

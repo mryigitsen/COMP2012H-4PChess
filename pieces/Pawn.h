@@ -9,7 +9,7 @@
 
 class Pawn : public Piece{
 public:
-    Pawn(Player& player, Game& game);
+    Pawn(Player& player, Game& game, int x, int y);
     virtual Piece::Type get_type() const;
     virtual int get_point() const;
     virtual void list_possible_moves();

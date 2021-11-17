@@ -9,7 +9,7 @@
 
 class Rook : public Piece {
 public:
-    Rook(Player& player, Game& game);
+    Rook(Player& player, Game& game, int x, int y);
     virtual Piece::Type get_type() const override;
     virtual int get_point() const override;
     virtual void list_possible_moves();

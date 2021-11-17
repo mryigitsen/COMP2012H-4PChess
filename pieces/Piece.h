@@ -12,7 +12,7 @@ class Player;
 
 class Piece {
 protected:
-    explicit Piece(Player &player, Game &game);
+    explicit Piece(Player &player, Game &game, int x, int y);
 
     Player &player;
     Game &game;
@@ -26,9 +26,10 @@ protected:
             QUEEN = 5,
             ROOK = 6
         };
-
+        int x;
+        int y;
         int which_player();
-
+        void setCoordinates(int x, int y);
         virtual ~Piece() = default;
 
         virtual Piece::Type get_type() const = 0;

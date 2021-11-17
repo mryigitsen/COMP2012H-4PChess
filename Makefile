@@ -35,7 +35,7 @@ $(OUT): $(OBJS)
 
 $(ZIP_OUT): $(SUBMISSION)
 	$(RM) $(ZIP_OUT)
-	$(ZIP) $@ $^
+	$(ZIP) $@ $e
 
 .PHONY: clean
 clean:

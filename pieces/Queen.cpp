@@ -3,7 +3,8 @@
 //
 
 #include "Queen.h"
-Queen::Queen(Player& player, Game& game): Piece(player, game) {}
+Queen::Queen(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
+
 
 Piece::Type Queen::get_type() const{
     return Piece::Type::QUEEN;

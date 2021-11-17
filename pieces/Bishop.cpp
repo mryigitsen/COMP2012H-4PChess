@@ -14,7 +14,7 @@ Piece::Type Bishop::get_type() const{
 }
 
 int Bishop::get_point() const{
-    return 5;
+    return 3;
 }
 
 void Bishop::list_possible_moves(){

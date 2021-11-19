@@ -162,13 +162,11 @@ void Game::print_board() {
     }
 
 }
-
 void Game::delete_piece(int x, int y)
 {
     delete board[x][y].piece;
     board[x][y].piece= nullptr;
 }
-
 Piece* Game::get_piece(int x, int y)
 {
     if(in_boundaries(x, y) && board[x][y].piece != nullptr)
@@ -177,15 +175,17 @@ Piece* Game::get_piece(int x, int y)
     }
     return nullptr;
 }
-bool Game::in_boundaries(int x, int y) {if(x < 14 && x > -1 && y < 14 && y > -1 && board[x][y].is_activated == true)
+bool Game::in_boundaries(int x, int y)
+{
+    if(x < 14 && x > -1 && y < 14 && y > -1 && board[x][y].is_activated == true)
     {
         return true;
     }
     return false;
 }
-
 void Game::movePiece(int initX, int initY, int destX, int destY)
     {
     board[destX][destY].piece = board[initX][initY].piece;
+    board[initX][initY].piece = nullptr;
     board[destX][destY].piece->setCoordinates(destX, destY);
     }

@@ -6,7 +6,6 @@
 #define INC_4PCHESS_PAWN_H
 #include "Piece.h"
 
-
 class Pawn : public Piece{
 public:
     Pawn(Player& player, Game& game, int x, int y);

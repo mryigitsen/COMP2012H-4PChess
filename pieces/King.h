@@ -6,7 +6,6 @@
 #define INC_4PCHESS_KING_H
 #include "Piece.h"
 
-
 class King : public Piece {
 public:
     King(Player& player, Game& game, int x, int y);

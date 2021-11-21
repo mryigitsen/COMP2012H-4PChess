@@ -5,6 +5,8 @@
 #ifndef INC_4PCHESS_BISHOP_H
 #define INC_4PCHESS_BISHOP_H
 #include "Piece.h"
+
+
 class Bishop : public Piece {
     public:
         Bishop(Player& player, Game& game, int x, int y);

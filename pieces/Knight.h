@@ -6,7 +6,6 @@
 #define INC_4PCHESS_KNIGHT_H
 #include "Piece.h"
 
-
 class Knight : public Piece {
 public:
     Knight(Player& player, Game& game, int x, int y);

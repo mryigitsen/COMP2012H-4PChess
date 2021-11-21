@@ -6,7 +6,6 @@
 #define INC_4PCHESS_QUEEN_H
 #include "Piece.h"
 
-
 class Queen : public Piece {
 private:
     bool converted = false;

@@ -14,6 +14,8 @@
 #include "pieces/Rook.h"
 #include "Player.h"
 
+class Player;
+
 class Game {
     public:
         struct Tile{
@@ -30,9 +32,11 @@ class Game {
     bool in_boundaries( int x, int y);
     Piece* get_piece(int x, int y);
     void movePiece(int initX, int initY, int destX, int destY);
+    void make_turn(int initX, int initY, int destX, int destY);
 
 
 private:
+        //Player* players[4] {nullptr, nullptr, nullptr, nullptr};
         Player players[4];
         int player_turn;
         ~Game();

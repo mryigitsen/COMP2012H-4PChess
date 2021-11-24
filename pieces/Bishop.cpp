@@ -3,25 +3,34 @@
 //
 
 #include "Bishop.h"
-#include "Piece.h"
 #include "iostream"
 #include "../Game.h"
+#include "Piece.h"
 
-Bishop::Bishop(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
+Bishop::Bishop(Player& player, Game& game, int x, int y): Piece(player, game, x, y){
+    points = 5;
+    player.pieces[player.num_pieces++] = this;
+}
 
 Piece::Type Bishop::get_type() const{
     return Piece::Type::BISHOP;
 }
 
 int Bishop::get_point() const{
-    return 3;
+    return points;
 }
 
-void Bishop::list_possible_moves(){
+int Bishop::list_possible_moves(){
 
     //Check for +Y (up)
-    int temp[14][14] = {0};
-    temp[x][y] = 1;
+
+    for(int i = 0; i < 14; ++i) {
+        for(int j = 0; j < 14; ++j) {
+            possible_moves[i][j] = 0;
+        }
+    }
+    possible_moves[x][y] = 1;
+    int num_moves = 0;
 
     int xpos = x+1;
     int ypos = y+1;
@@ -31,13 +40,15 @@ void Bishop::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -58,13 +69,15 @@ void Bishop::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -84,13 +97,15 @@ void Bishop::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -111,13 +126,15 @@ void Bishop::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -135,10 +152,12 @@ void Bishop::list_possible_moves(){
 
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
-            std::cout<<temp[i][j] << " ";
+            std::cout<<possible_moves[i][j] << " ";
         }
         std::cout<<std::endl;
 
     }
+
+    return num_moves;
 }
 

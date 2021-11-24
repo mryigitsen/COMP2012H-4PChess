@@ -4,18 +4,17 @@
 
 #ifndef INC_4PCHESS_PLAYER_H
 #define INC_4PCHESS_PLAYER_H
-#include "./Game.h"
+//#include "Game.h"
 
 class Game;
+class Piece;
 
 class Player {
 private:
     bool is_active;
     int score;
     int indexNum;
-    bool opp_threat_map[14][14];
-    //Game& game;
-    //Game game;
+    Game& game;
 
 public:
         enum class Direction{
@@ -26,11 +25,20 @@ public:
 
             DIRECTION
         };
-    //Player(Game& game);
+    ~Player();
     
     void set_index(int index);
     int get_index();
+    Player(Game& game);
+    bool is_in_game();
+    bool check_move();
+    int get_score();
+    void increase_score(int);
+    void deactivate();
+
     void generate_threat_map();
+    int num_pieces = 0;
+    Piece* pieces[16];
 };
 
 

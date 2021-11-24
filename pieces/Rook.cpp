@@ -5,7 +5,10 @@
 #include "Rook.h"
 #include "../Game.h"
 #include "iostream"
-Rook::Rook(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
+Rook::Rook(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {
+    points = 5;
+    player.pieces[player.num_pieces++] = this;
+}
 
 
 Piece::Type Rook::get_type() const {
@@ -13,14 +16,19 @@ Piece::Type Rook::get_type() const {
 }
 
 int Rook::get_point() const{
-    return 5;
+    return points;
 }
 
-void Rook::list_possible_moves(){
+int Rook::list_possible_moves(){
+    for(int i = 0; i < 14; ++i) {
+        for(int j = 0; j < 14; ++j) {
+            possible_moves[i][j] = 0;
+        }
+    }
 
-    //Check for +Y (up)
-    int temp[14][14] = {0};
-    temp[x][y] = 1;
+    possible_moves[x][y] = 1;
+    int num_moves = 0;
+    
     int xpos = x;
     int ypos = y-1;
     while(true)
@@ -29,13 +37,15 @@ void Rook::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -55,13 +65,15 @@ void Rook::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -80,13 +92,15 @@ void Rook::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -106,13 +120,15 @@ void Rook::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -126,9 +142,11 @@ void Rook::list_possible_moves(){
 
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
-            std::cout<<temp[i][j] << " ";
+            std::cout<<possible_moves[i][j] << " ";
         }
         std::cout<<std::endl;
 
     }
+
+    return num_moves;
 }

@@ -8,18 +8,33 @@ int main()
     Game* temp = new Game();
     temp->print_board();
     std::cout<<std::endl;
-    temp->delete_piece(12, 10);
+    //temp->delete_piece(12, 10);
     temp->print_board();
     std::cout<<std::endl;
 
     temp->get_piece(13,10)->list_possible_moves();
     std::cout<<std::endl;
 
-    temp->movePiece(13, 10, 7, 7);
+    temp->movePiece(13, 10, 1, 10);
+    temp->movePiece(1, 10, 7, 7);
     temp->print_board();
     std::cout<<std::endl;
 
     temp->get_piece(7,7)->list_possible_moves();
+
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+
+    temp->movePiece(12, 4, 0, 5);
+    temp->print_board();
+    temp->get_piece(0,5)->list_possible_moves();
+
+    temp->movePiece(0, 5, 4, 7);
+    temp->print_board();
+    temp->get_piece(4,7)->list_possible_moves();
 
     std::cout<<std::endl;
     std::cout<<std::endl;
@@ -32,9 +47,9 @@ int main()
     temp2->print_board();
     std::cout<<std::endl;
 
-    temp2->delete_piece(12, 6);
-    temp2->delete_piece(12, 7);
-    temp2->delete_piece(12, 8);
+    // temp2->delete_piece(12, 6);
+    // temp2->delete_piece(12, 7);
+    // temp2->delete_piece(12, 8);
 
     temp2->print_board();
     std::cout<<std::endl;
@@ -77,9 +92,9 @@ int main()
     temp4->print_board();
     std::cout<<std::endl;
 
-    temp4->delete_piece(12, 9);
-    temp4->delete_piece(12, 7);
-    temp4->delete_piece(12, 8);
+    // temp4->delete_piece(12, 9);
+    // temp4->delete_piece(12, 7);
+    // temp4->delete_piece(12, 8);
 
     temp4->print_board();
     std::cout<<std::endl;
@@ -117,6 +132,6 @@ int main()
     temp5->get_piece(5,12)->list_possible_moves();
     std::cout<<std::endl;
 
-
-
+    temp->print_board();
+    //temp->make_turn();
 }

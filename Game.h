@@ -21,6 +21,11 @@ class Game {
         struct Tile{
             Piece* piece;
             bool is_activated = true;
+
+            // void operator=(const Tile& tile) {
+            //     *(this->piece) = *(tile.piece);
+            //     this->is_activated = tile.is_activated;
+            // }
         };
 
         Game();
@@ -28,17 +33,21 @@ class Game {
         void next_turn(); 
         void print_board();
         void delete_piece(int x, int y);
-    Tile board[14][14];
-    bool in_boundaries( int x, int y);
-    Piece* get_piece(int x, int y);
-    void movePiece(int initX, int initY, int destX, int destY);
-    void make_turn(int initX, int initY, int destX, int destY);
+        Tile board[14][14];
+        bool in_boundaries( int x, int y);
+        Piece* get_piece(int x, int y);
+        void movePiece(int initX, int initY, int destX, int destY);
+        bool is_checked(int index, const int (&board_copy)[14][14]);
+        int is_checked_player(int index, const int (&board_copy)[14][14]);
+        void create_board_copy(int current_turn, int (&board_copy)[14][14]);
+
+        void make_turn();
 
 
 private:
-        //Player* players[4] {nullptr, nullptr, nullptr, nullptr};
-        Player players[4];
+        Player* players[4];
         int player_turn;
+        int turn_number;
         ~Game();
         
         struct Coordinates{

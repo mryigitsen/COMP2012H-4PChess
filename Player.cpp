@@ -5,7 +5,12 @@
 #include "Player.h"
 #include "Game.h"
 
-//Player::Player(Game& game) : game{game} {}
+Player::Player(Game& game) : game{game}, is_active{true} {}
+Player::~Player() {
+    for(int i = 0; i < 16; ++i) {
+        delete pieces[i];
+    }
+}
 
 void Player::set_index(int index)
 {
@@ -16,11 +21,35 @@ int Player::get_index()
     return indexNum;
 }
 
-// void Player::generate_threat_map() {
-//     for(int i = 0; i < 14; ++i) {
-//         for(int j = 0; j < 14; ++j) {
-//             if(!game.in_boundaries(i, j))
-//                 continue;
-//         }
-//     }
-// }
+void Player::generate_threat_map() {
+    for(int i = 0; i < 14; ++i) {
+        for(int j = 0; j < 14; ++j) {
+            if(game.in_boundaries(i, j)) {
+            
+            }
+        }
+    }
+}
+
+bool Player::is_in_game() {
+    return is_active;
+}
+
+bool Player::check_move() {
+    return true;
+}
+
+void Player::increase_score(int score) {
+    this->score += score;
+}
+
+int Player::get_score() {
+    return score;
+}
+
+void Player::deactivate() {
+    for(int i = 0; i < 16; ++i) {
+        pieces[i]->set_points(0);
+    }
+    is_active = false;
+}

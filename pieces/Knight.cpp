@@ -5,51 +5,64 @@
 #include "Knight.h"
 #include "iostream"
 #include "../Game.h"
-Knight::Knight(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
+Knight::Knight(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {
+    points = 3;
+    player.pieces[player.num_pieces++] = this;
+}
 
 Piece::Type Knight::get_type() const{
     return Piece::Type::KNIGHT;
 }
 
 int Knight::get_point() const{
-    return 3;
+    return points;
 }
 
-void Knight::list_possible_moves(){
-    //Do nothing
-    int temp[14][14] = {0};
-    temp[x][y] = 1;
+int Knight::list_possible_moves(){
+    for(int i = 0; i < 14; ++i) {
+        for(int j = 0; j < 14; ++j) {
+            possible_moves[i][j] = 0;
+        }
+    }
+    possible_moves[x][y] = 1;
+    int num_moves = 0;
 
     if(game.in_boundaries(x + 2, y + 1)) {
         if(game.get_piece(x + 2, y + 1) != nullptr) {
             if(game.get_piece(x + 2, y + 1)->which_player() != player.get_index())
-                temp[x+2][y+1] = 2;
+                possible_moves[x+2][y+1] = 2;
+                num_moves++;
         }
         else
         {
-            temp[x+2][y+1] = 2;
+            possible_moves[x+2][y+1] = 2;
+            num_moves++;
         }
     }
 
     if(game.in_boundaries(x + 2, y - 1)) {
         if(game.get_piece(x + 2, y - 1) != nullptr) {
             if(game.get_piece(x + 2, y - 1)->which_player() != player.get_index())
-                temp[x+2][y-1] = 2;
+                possible_moves[x+2][y-1] = 2;
+                num_moves++;
         }
         else
         {
-            temp[x+2][y-1] = 2;
+            possible_moves[x+2][y-1] = 2;
+            num_moves++;
         }
     }
 
     if(game.in_boundaries(x - 2, y + 1)) {
         if(game.get_piece(x - 2, y + 1) != nullptr) {
             if(game.get_piece(x - 2, y + 1)->which_player() != player.get_index())
-                temp[x-2][y+1] = 2;
+                possible_moves[x-2][y+1] = 2;
+                num_moves++;
         }
         else
         {
-            temp[x-2][y+1] = 2;
+            possible_moves[x-2][y+1] = 2;
+            num_moves++;
 
 
         }
@@ -57,57 +70,69 @@ void Knight::list_possible_moves(){
     if(game.in_boundaries(x - 2, y - 1)) {
         if(game.get_piece(x - 2, y - 1) != nullptr) {
             if(game.get_piece(x - 2, y - 1)->which_player() != player.get_index())
-                temp[x-2][y-1] = 2;
+                possible_moves[x-2][y-1] = 2;
+                num_moves++;
         }
         else{
-            temp[x-2][y-1] = 2;
+            possible_moves[x-2][y-1] = 2;
+            num_moves++;
         }
     }
 
     if(game.in_boundaries(x + 1, y + 2)) {
         if(game.get_piece(x + 1, y + 2) != nullptr) {
             if(game.get_piece(x + 1, y + 2)->which_player() != player.get_index())
-                temp[x+1][y+2] = 2;
+                possible_moves[x+1][y+2] = 2;
+                num_moves++;
         }
         else{
-            temp[x+1][y+2] = 2;
+            possible_moves[x+1][y+2] = 2;
+            num_moves++;
         }
     }
     if(game.in_boundaries(x - 1, y + 2)) {
         if(game.get_piece(x - 1, y + 2) != nullptr) {
             if(game.get_piece(x - 1, y + 2)->which_player() != player.get_index())
-                temp[x-1][y+2] = 2;
+                possible_moves[x-1][y+2] = 2;
+                num_moves++;
         }
         else{
-            temp[x-1][y+2] = 2;
+            possible_moves[x-1][y+2] = 2;
+            num_moves++;
 
         }
     }
     if(game.in_boundaries(x + 1, y - 2)) {
         if(game.get_piece(x + 1, y - 2) != nullptr) {
             if(game.get_piece(x + 1, y - 2)->which_player() != player.get_index())
-                temp[x+1][y-2] = 2;
+                possible_moves[x+1][y-2] = 2;
+                num_moves++;
         }
         else{
-            temp[x+1][y-2] = 2;
+            possible_moves[x+1][y-2] = 2;
+            num_moves++;
         }
     }
     if(game.in_boundaries(x - 1, y - 2)) {
         if(game.get_piece(x - 1, y - 2) != nullptr) {
             if(game.get_piece(x - 1, y - 2)->which_player() != player.get_index())
-                temp[x-1][y-2] = 2;
+                possible_moves[x-1][y-2] = 2;
+                num_moves++;
         }
         else{
-            temp[x-1][y-2] = 2;
+            possible_moves[x-1][y-2] = 2;
+            num_moves++;
 
         }
     }
 
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
-            std::cout<<temp[i][j] << " ";
+            std::cout<<possible_moves[i][j] << " ";
         }
         std::cout<<std::endl;
 
     }
+
+    return num_moves;
 }

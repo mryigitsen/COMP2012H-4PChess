@@ -5,7 +5,10 @@
 #include "Queen.h"
 #include "../Game.h"
 #include <iostream>
-Queen::Queen(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {}
+Queen::Queen(Player& player, Game& game, int x, int y): Piece(player, game, x, y) {
+    points = 9;
+    player.pieces[player.num_pieces++] = this;
+}
 
 
 Piece::Type Queen::get_type() const{
@@ -13,17 +16,18 @@ Piece::Type Queen::get_type() const{
 }
 
 int Queen::get_point() const{
-    if(converted)
-        return 1;
-    else
-        return 9;
+    return points;
 }
 
-void Queen::list_possible_moves(){
+int Queen::list_possible_moves(){
+    for(int i = 0; i < 14; ++i) {
+        for(int j = 0; j < 14; ++j) {
+            possible_moves[i][j] = 0;
+        }
+    }
+    possible_moves[x][y] = 1;
+    int num_moves = 0;
 
-    //Check for +Y (up)
-    int temp[14][14] = {0};
-    temp[x][y] = 1;
     int xpos = x;
     int ypos = y-1;
     while(true)
@@ -32,13 +36,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -58,13 +64,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -83,13 +91,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -109,13 +119,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -134,13 +146,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -161,13 +175,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -187,13 +203,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -214,13 +232,15 @@ void Queen::list_possible_moves(){
         {
             if(game.get_piece(xpos, ypos) == nullptr)
             {
-                temp[xpos][ypos] = 2;
+                possible_moves[xpos][ypos] = 2;
+                num_moves++;
             }
             else
             {
                 if(game.get_piece(xpos, ypos)->which_player() != this->which_player())
                 {
-                    temp[xpos][ypos] = 2;
+                    possible_moves[xpos][ypos] = 2;
+                    num_moves++;
                 }
                 break;
             }
@@ -238,11 +258,13 @@ void Queen::list_possible_moves(){
 
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
-            std::cout<<temp[i][j] << " ";
+            std::cout<<possible_moves[i][j] << " ";
         }
         std::cout<<std::endl;
 
     }
+
+    return num_moves;
 }
 
 void Queen::convert() {

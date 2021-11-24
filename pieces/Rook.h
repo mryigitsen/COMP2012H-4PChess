@@ -6,12 +6,13 @@
 #define INC_4PCHESS_ROOK_H
 #include "Piece.h"
 
+
 class Rook : public Piece {
 public:
     Rook(Player& player, Game& game, int x, int y);
     virtual Piece::Type get_type() const override;
     virtual int get_point() const override;
-    virtual void list_possible_moves() override;
+    virtual int list_possible_moves() override;
 
 };
 

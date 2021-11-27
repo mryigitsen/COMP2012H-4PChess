@@ -264,5 +264,7 @@ int Pawn::list_possible_moves() {
 }
 
 std::string Pawn::get_img() const {
+    if(!player.is_in_game())
+        return ":/img/DeactivatedPlayer/pawn.png";
     return ":/img/Player" + std::to_string(player.get_index()) + "/pawn.png";
 }

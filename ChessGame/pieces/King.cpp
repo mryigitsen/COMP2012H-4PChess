@@ -179,7 +179,8 @@ int King::list_possible_moves() {
 }
 
 std::string King::get_img() const {
+    if(!player.is_in_game())
+        return ":/img/DeactivatedPlayer/king.png";
     return ":/img/Player" + std::to_string(player.get_index()) + "/king.png";
-
 }
 

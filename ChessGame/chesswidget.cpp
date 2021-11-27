@@ -2,6 +2,7 @@
 #include <QGridLayout>
 #include <QLayout>
 #include <QVBoxLayout>
+#include <QApplication>
 #include "Game.h"
 #include <QIcon>
 #include <iostream>
@@ -110,10 +111,12 @@ void ChessWidget::handleButtonClick(int index) {
         //game->make_turn();
         resetColors(true);
         std::cout<<"RESETTED"<<std::endl;
+        QApplication::processEvents();
         while(game->get_cur_player_pointer()->get_is_bot()){
               game->bot_move_piece();
               resetColors(true);
-              //sleep(2);
+              QApplication::processEvents();
+              sleep(1);
         }
 
 //       std::cout<< "MOVE" << std::endl;

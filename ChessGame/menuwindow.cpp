@@ -23,7 +23,5 @@ void MenuWindow::on_start_game_clicked()
     m->setAttribute(Qt::WA_DeleteOnClose);
     m->setStyleSheet("QWidget{font:Arial}");
     m->show();
-
     close();
-
 }

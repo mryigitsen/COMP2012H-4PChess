@@ -48,61 +48,44 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
+RESOURCES += \
+    resources.qrc \
     cmake-build-debug/CMakeFiles/clion-log.txt \
     img/Activated_Square.png \
     img/Black_Possible_Move.png \
-    img/Black_Square.png \
-    img/Player 1/Blue_Bishop.png \
-    img/Player 1/Blue_King.png \
-    img/Player 1/Blue_Knight.png \
-    img/Player 1/Blue_Pawn.png \
-    img/Player 1/Blue_Queen.png \
-    img/Player 1/Blue_Rook.png \
-    img/Player 2/Yellow_Bishop.png \
-    img/Player 2/Yellow_King.png \
-    img/Player 2/Yellow_Knight.png \
-    img/Player 2/Yellow_Pawn.png \
-    img/Player 2/Yellow_Queen.png \
-    img/Player 2/Yellow_Rook.png \
-    img/Player 3/Green_Bishop.png \
-    img/Player 3/Green_King.png \
-    img/Player 3/Green_Knight.png \
-    img/Player 3/Green_Pawn.png \
-    img/Player 3/Green_Queen.png \
-    img/Player 3/Green_Rook.png \
-    img/Player 4/Red_Bishop.png \
-    img/Player 4/Red_King.png \
-    img/Player 4/Red_Knight.png \
-    img/Player 4/Red_Pawn.png \
-    img/Player 4/Red_Queen.png \
-    img/Player 4/Red_Rook.png \
-    img/Player1/Blue_Bishop.png \
-    img/Player1/Blue_King.png \
-    img/Player1/Blue_Knight.png \
-    img/Player1/Blue_Pawn.png \
-    img/Player1/Blue_Queen.png \
-    img/Player1/Blue_Rook.png \
-    img/Player2/Yellow_Bishop.png \
-    img/Player2/Yellow_King.png \
-    img/Player2/Yellow_Knight.png \
-    img/Player2/Yellow_Pawn.png \
-    img/Player2/Yellow_Queen.png \
-    img/Player2/Yellow_Rook.png \
-    img/Player3/Green_Bishop.png \
-    img/Player3/Green_King.png \
-    img/Player3/Green_Knight.png \
-    img/Player3/Green_Pawn.png \
-    img/Player3/Green_Queen.png \
-    img/Player3/Green_Rook.png \
-    img/Player4/Red_Bishop.png \
-    img/Player4/Red_King.png \
-    img/Player4/Red_Knight.png \
-    img/Player4/Red_Pawn.png \
-    img/Player4/Red_Queen.png \
-    img/Player4/Red_Rook.png \
     img/White_Possible_Move.png \
-    img/White_Square.png
+    img/White_Square.png \
+    img/Black_Square.png \
+    img/Player0/bishop.png \
+    img/Player0/king.png \
+    img/Player0/knight.png \
+    img/Player0/pawn.png \
+    img/Player0/queen.png \
+    img/Player0/rook.png \
+    img/Player1/bishop.png \
+    img/Player1/king.png \
+    img/Player1/knight.png \
+    img/Player1/pawn.png \
+    img/Player1/queen.png \
+    img/Player1/rook.png \
+    img/Player2/bishop.png \
+    img/Player2/king.png \
+    img/Player2/knight.png \
+    img/Player2/pawn.png \
+    img/Player2/queen.png \
+    img/Player2/rook.png \
+    img/Player3/bishop.png \
+    img/Player3/king.png \
+    img/Player3/knight.png \
+    img/Player3/pawn.png \
+    img/Player3/queen.png \
+    img/Player3/rook.png \
+    img/DeactivatedPlayer/bishop.png \
+    img/DeactivatedPlayer/king.png \
+    img/DeactivatedPlayer/knight.png \
+    img/DeactivatedPlayer/pawn.png \
+    img/DeactivatedPlayer/queen.png \
+    img/DeactivatedPlayer/rook.png
 
-RESOURCES += \
-    resources.qrc
+
+QT_QUICK_CONTROLS_STYLE = material ./app

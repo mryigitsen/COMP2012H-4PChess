@@ -215,6 +215,8 @@ void Queen::convert() {
 }
 
 std::string Queen::get_img() const {
+    if(!player.is_in_game())
+        return ":/img/DeactivatedPlayer/queen.png";
     return ":/img/Player" + std::to_string(player.get_index()) + "/queen.png";
 
 }

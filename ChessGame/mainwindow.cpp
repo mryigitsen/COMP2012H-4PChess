@@ -19,8 +19,6 @@ MainWindow::MainWindow(int count, QWidget *parent)
     client->send("reg 2 false\n");
     client->send("reg 3 true\n");
 
-
-
 }
 
 MainWindow::~MainWindow() {

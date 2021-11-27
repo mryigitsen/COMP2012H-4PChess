@@ -139,6 +139,7 @@ int Knight::list_possible_moves() {
 }
 
 std::string Knight::get_img() const {
+    if(!player.is_in_game())
+        return ":/img/DeactivatedPlayer/knight.png";
     return ":/img/Player" + std::to_string(player.get_index()) + "/knight.png";
-
 }

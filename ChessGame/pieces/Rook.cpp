@@ -124,6 +124,7 @@ int Rook::list_possible_moves() {
 }
 
 std::string Rook::get_img() const {
+    if(!player.is_in_game())
+        return ":/img/DeactivatedPlayer/rook.png";
     return ":/img/Player" + std::to_string(player.get_index()) + "/rook.png";
-
 }

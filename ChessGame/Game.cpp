@@ -374,14 +374,16 @@ void Game::bot_move_piece() {
     //To get a random move out of a player's possible moves list
     do{
         index = get_random_number(0, 15);
-        for(int i = 0; i < 14; ++i) {
-            for(int j = 0; j < 14; ++j) {
-                if(players[player_num]->pieces[index]->get_possible_move_at(i, j) == 2){
-                    possible_move_list.push_back(std::vector<int>());
-                    possible_move_list[possible_move_list.size() - 1].push_back(i);
-                    possible_move_list[possible_move_list.size() - 1].push_back(j);
-                }
-            }   // Check for moves, if no moves, repeat, if moves, randomly select one
+        if(!players[player_num]->pieces[index]->get_is_captured()){
+            for(int i = 0; i < 14; ++i) {
+                for(int j = 0; j < 14; ++j) {
+                    if(players[player_num]->pieces[index]->get_possible_move_at(i, j) == 2){
+                        possible_move_list.push_back(std::vector<int>());
+                        possible_move_list[possible_move_list.size() - 1].push_back(i);
+                        possible_move_list[possible_move_list.size() - 1].push_back(j);
+                    }
+                }   // Check for moves, if no moves, repeat, if moves, randomly select one
+            }
         }
     } while (possible_move_list.size() == 0);
 

@@ -7,6 +7,7 @@
 
 #include <string>
 #include "../Player.h"
+#include <vector>
 
 //#include "../Game.h"
 class Game;

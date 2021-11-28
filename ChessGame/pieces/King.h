@@ -1,5 +1,5 @@
-//
-
+// King class publicly inherits the Piece class which has all the base attributes that chess pieces should contain
+// The King class has its own member functions that only apply to all King pieces on the board
 
 #ifndef INC_4PCHESS_KING_H
 #define INC_4PCHESS_KING_H
@@ -19,7 +19,7 @@ class King : public Piece {
 
         virtual int list_possible_moves() override;
 
-        std::string get_img() const;
+        std::string get_img() const override;
 };
 
 

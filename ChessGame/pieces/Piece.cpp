@@ -1,5 +1,9 @@
+//
+// Created by Yigit Sen on 13/11/2021.
+//
 
 #include "Piece.h"
+#include <vector>
 #include "../Game.h"
 
 Piece::Piece(Player &player, Game &game, int x, int y) : player{player}, game{game}, x(x), y(y), is_captured(false),
@@ -12,8 +16,8 @@ void Piece::setCoordinates(int x, int y) {
     this->y = y;
 }
 
-void Piece::set_is_captured(bool status) {
-    is_captured = status;
+void Piece::set_is_captured() {
+    is_captured = true;
 }
 
 bool Piece::get_is_captured() {
@@ -45,6 +49,9 @@ std::vector <Piece::Coordinates> Piece::get_moves_vec() {
 
 int Piece::getX(){ return x;}
 int Piece::getY(){ return y;}
+
+void Piece::setX_0() { x = 0;}
+void Piece::setY_0() { y = 0;}
 
 int Piece::get_possible_move_at(int x, int y) {
     return possible_moves[x][y];

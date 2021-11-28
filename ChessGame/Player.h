@@ -1,53 +1,60 @@
 //
+// Created by Yigit Sen on 13/11/2021.
+//
 
 #ifndef INC_4PCHESS_PLAYER_H
 #define INC_4PCHESS_PLAYER_H
+//#include "Game.h"
 
 class Game;
 
 class Piece;
 
 class Player {
+private:
+    bool is_active = false;
+    int score = 0;
+    int indexNum = 0;
+    Game &game;
+    bool is_bot = false;
+    bool is_online = false;
 
-    private:
-        bool is_active;
-        int score = 0;
-        int indexNum;
-        Game &game;
-        bool is_bot;
+public:
+    enum class Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
 
-    public:
-        enum class Direction {
-            UP,
-            DOWN,
-            LEFT,
-            RIGHT,
+        DIRECTION
+    };
 
-            DIRECTION
-        };
+    ~Player();
 
-        Player(Game &game);
-        ~Player();
+    void set_index(int index);
 
-        void set_index(int index);
+    int get_index();
 
-        int get_index();
+    Player(Game &game);
 
-        bool is_in_game();
+    bool is_in_game();
 
-        bool check_move();
+    bool check_move();
 
-        int get_score();
+    int get_score();
 
-        void increase_score(int);
+    void increase_score(int);
 
-        void deactivate();
+    void deactivate();
 
-        bool get_is_bot() const;
-        void set_is_bot();
+    void generate_threat_map();
 
-        int num_pieces = 0;
-        Piece *pieces[16];
+    bool get_is_bot() const;
+    void set_is_bot();
+    bool get_is_online() const;
+    void set_is_online();
+    int num_pieces = 0;
+    Piece *pieces[16];
 };
 
 

@@ -1,3 +1,6 @@
+//
+// Created by Yigit Sen on 13/11/2021.
+//
 
 #include "Player.h"
 #include "Game.h"
@@ -16,6 +19,16 @@ void Player::set_index(int index) {
 
 int Player::get_index() {
     return indexNum;
+}
+
+void Player::generate_threat_map() {
+    for (int i = 0; i < 14; ++i) {
+        for (int j = 0; j < 14; ++j) {
+            if (game.in_boundaries(i, j)) {
+
+            }
+        }
+    }
 }
 
 bool Player::is_in_game() {
@@ -47,4 +60,11 @@ bool Player::get_is_bot() const {
 }
 void Player::set_is_bot() {
     is_bot = true;
+}
+
+bool Player::get_is_online() const {
+    return is_online;
+}
+void Player::set_is_online() {
+    is_online = true;
 }

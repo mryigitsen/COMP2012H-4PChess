@@ -1,6 +1,5 @@
 //
-// Created by Yigit Sen on 13/11/2021.
-//
+
 
 #ifndef INC_4PCHESS_QUEEN_H
 #define INC_4PCHESS_QUEEN_H
@@ -9,23 +8,24 @@
 
 
 class Queen : public Piece {
-private:
-    bool converted = false;
-public:
-    Queen(Player &player, Game &game, int x, int y);
 
-    Queen(Player &player, Game &game, int x, int y, int pos);
+    private:
+        bool converted = false;
 
-    virtual Piece::Type get_type() const override;
+    public:
+        Queen(Player &player, Game &game, int x, int y);
 
-    virtual int get_point() const override;
+        Queen(Player &player, Game &game, int x, int y, int pos);
 
-    virtual int list_possible_moves() override;
+        virtual Piece::Type get_type() const override;
 
-    void convert();
+        virtual int get_point() const override;
 
-    std::string get_img() const;
+        virtual int list_possible_moves() override;
 
+        void convert();
+
+        std::string get_img() const override;
 };
 
 

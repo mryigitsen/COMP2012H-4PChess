@@ -1,6 +1,3 @@
-//
-// Created by Yigit Sen on 13/11/2021.
-//
 
 #include "Rook.h"
 #include "../Game.h"

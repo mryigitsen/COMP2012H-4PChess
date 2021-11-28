@@ -1,3 +1,4 @@
+
 #include "chessclientobj.h"
 
 ChessClientObj::ChessClientObj(QString address, int port, QObject *parent) : QObject(parent)

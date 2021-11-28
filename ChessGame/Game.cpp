@@ -1,6 +1,3 @@
-//
-// Created by Yigit Sen on 13/11/2021.
-//
 
 #include "Game.h"
 #include "Player.h"
@@ -14,7 +11,7 @@ namespace Random_Generator{
 std::mt19937 mersenne{static_cast<std::mt19937::result_type>(std::time(nullptr))};
 }
 
-int get_random_number(int min, int max) {
+int Game::get_random_number(int min, int max) {
     std::uniform_int_distribution<int> uniform_dist(min, max);
     return uniform_dist(Random_Generator::mersenne);
 }

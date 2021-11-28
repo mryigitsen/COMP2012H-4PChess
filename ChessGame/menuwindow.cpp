@@ -1,10 +1,10 @@
+
 #include "menuwindow.h"
 #include "ui_menuwindow.h"
 #include "mainwindow.h"
 #include <iostream>
-MenuWindow::MenuWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MenuWindow)
+
+MenuWindow::MenuWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MenuWindow)
 {
     ui->setupUi(this);
 }

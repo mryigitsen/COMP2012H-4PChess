@@ -1,3 +1,5 @@
+//
+
 #ifndef CHESSWIDGET_H
 #define CHESSWIDGET_H
 
@@ -8,36 +10,32 @@
 #include "Game.h"
 
 class ChessWidget : public QWidget {
+
     Q_OBJECT
-public:
-    explicit ChessWidget(int botCount = 0, QWidget *parent = nullptr);
+    public:
+        explicit ChessWidget(int botCount = 0, QWidget *parent = nullptr);
 
-private:
-    int chosenx = 0;
-    int choseny = 0;
-    std::vector <Piece::Coordinates> current_piece_vec;
-    Game *game;
+    private:
+        int chosenx = 0;
+        int choseny = 0;
+        Game *game;
+        std::vector <Piece::Coordinates> current_piece_vec;
+        QPushButton *button_arr[14][14];
 
-    int heightForWidth(int) const;
+        int heightForWidth(int) const;
 
-    bool offline;
-    QPushButton *button_arr[14][14];
+        bool offline;
 
-    void initMap(QGridLayout *, QSignalMapper *, Game *);
+        void initMap(QGridLayout *, QSignalMapper *, Game *);
 
-    void handle_valid_moves(Piece::Coordinates) const;
+        void handle_valid_moves(Piece::Coordinates) const;
 
-    bool check_piece(Piece::Coordinates);
+        bool check_piece(Piece::Coordinates);
 
-    void resetColors(bool);
+        void resetColors(bool);
 
-private
-    slots:
-            void handleButtonClick(int);
-
-    signals:
-
-
+    private slots:
+        void handleButtonClick(int);
 };
 
 #endif // CHESSWIDGET_H

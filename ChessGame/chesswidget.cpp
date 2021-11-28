@@ -1,3 +1,4 @@
+
 #include "chesswidget.h"
 #include <QGridLayout>
 #include <QLayout>

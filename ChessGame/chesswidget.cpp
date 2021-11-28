@@ -14,7 +14,7 @@
 #include <QThread>
 #include "unistd.h"
 ChessWidget::ChessWidget(ChessClientObj *client, int botCount, bool online , bool firstOnline, MainWindow *mw, QWidget *parent) : QWidget(parent), mw(mw) {
-    game = new Game(client, botCount, online, firstOnline);
+    game = new Game(client, botCount, online, firstOnline, mw);
     if(client != nullptr)
     {
     client->registerWidget(this);
@@ -90,6 +90,7 @@ void ChessWidget::initMap(QGridLayout *gridLayout, QSignalMapper *mapper, Game *
 
     connect(mapper, SIGNAL(mapped(int)),
             this, SLOT(handleButtonClick(int)));
+    mw->update_status(game->get_player_at(0)->get_status(),game->get_player_at(1)->get_status(),game->get_player_at(2)->get_status(),game->get_player_at(3)->get_status());
 
 }
 

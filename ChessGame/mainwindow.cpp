@@ -18,8 +18,15 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::update_scores(int player_1_score, int player_2_score, int player_3_score, int player_4_score) {
-    ui->Player_1_Score->setText(QString::number(player_1_score));
-    ui->Player_2_Score->setText(QString::number(player_2_score));
-    ui->Player_3_Score->setText(QString::number(player_3_score));
-    ui->Player_4_Score->setText(QString::number(player_4_score));
+    ui->Player_1_Score->setText("Score: " + QString::number(player_1_score));
+    ui->Player_2_Score->setText("Score: " + QString::number(player_2_score));
+    ui->Player_3_Score->setText("Score: " + QString::number(player_3_score));
+    ui->Player_4_Score->setText("Score: " + QString::number(player_4_score));
+}
+
+void MainWindow::update_status(std::string player_1_status, std::string player_2_status, std::string player_3_status, std::string player_4_status) {
+    ui->Player_1_Status->setText("Status: " + QString::fromStdString(player_1_status));
+    ui->Player_2_Status->setText("Status: " + QString::fromStdString(player_2_status));
+    ui->Player_3_Status->setText("Status: " + QString::fromStdString(player_3_status));
+    ui->Player_4_Status->setText("Status: " + QString::fromStdString(player_4_status));
 }

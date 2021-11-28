@@ -19,7 +19,7 @@ int get_random_number(int min, int max) {
     return uniform_dist(Random_Generator::mersenne);
 }
 
-Game::Game(ChessClientObj *client, int botCount, bool online, bool firstOnline) : is_online(online), client(client){
+Game::Game(ChessClientObj *client, int botCount, bool online, bool firstOnline, MainWindow *mw) : is_online(online), client(client), mw(mw){
     turn_number = 0;
     //First player is always 0
     std::cout<<"BOT" << botCount <<std::endl;
@@ -209,6 +209,7 @@ Game::Game(ChessClientObj *client, int botCount, bool online, bool firstOnline) 
             }
         }
     }
+    players[0]->set_status("Playing...");
 }
 
 Game::~Game() {
@@ -221,6 +222,16 @@ Player* Game::get_player_at(int index) {
     return players[index];
 }
 
+void Game::deactivate_player(int index, std::string status) {
+    players[index]->deactivate();
+    players[index]->set_status(status);
+    mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+}
+
+void Game::end_game()
+{
+    std::cout << "\n\n\n\n\n\n\nGAME HAS ENDED!!!!!\n\n\n\n\n\n\n";
+}
 void Game::print_board() {
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
@@ -510,6 +521,12 @@ void Game::bot_move_piece() {
 }
 
 void Game::create_board_copy(int current_turn, int (&board_copy)[14][14]) {
+    for(int i = 0; i < 14; ++i) {
+        for(int j = 0; j < 14; ++j) {
+            board_copy[i][j] = 0;
+        }
+    }
+
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
             Piece* piece = board[i][j].piece;
@@ -541,8 +558,7 @@ void Game::create_board_copy(int current_turn, int (&board_copy)[14][14]) {
 }
 
 void Game::make_turn() {
-
-
+    players[turn_number%4]->set_status("Waiting...");
     int current_turn;
     Player *current_player;
     do
@@ -553,6 +569,17 @@ void Game::make_turn() {
         current_player = players[current_turn];
     }
     while(!current_player->is_in_game());
+
+    int board_copy[14][14];
+    create_board_copy(current_turn, board_copy);
+    if(is_checked(current_turn, board_copy)) {
+        current_player->set_status("Checked");
+        mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+    }
+    else {
+        current_player->set_status("Playing...");
+        mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+    }
 
 
     int num_moves = 0;
@@ -580,7 +607,7 @@ void Game::make_turn() {
             }
         }
     }
-    int board_copy[14][14];
+
     create_board_copy(current_turn, board_copy);
     std::cout << "\n\n\n\n\n\n" << current_turn << '\n' << num_moves << "\n\n\n\n\n\n";
     if (num_moves == 0) {
@@ -588,9 +615,9 @@ void Game::make_turn() {
             std::cout << is_checked_player(current_turn, board_copy) << "\n\n\n\n";
             players[is_checked_player(current_turn, board_copy)]->increase_score(20);
             std::cout << "deactivating player" << current_player->get_index() << std::endl;
-            current_player->deactivate();
+            deactivate_player(current_player->get_index(), "Checkmated");
         } else {
-            current_player->deactivate();
+            deactivate_player(current_player->get_index(), "Stalemated");
             for (int i = 0; i < 4; ++i) {
                 if (players[i]->is_in_game())
                     players[i]->increase_score(10);
@@ -627,9 +654,13 @@ void Game::make_turn() {
     //if (num_moves == 0 && check_moves(original map))
 
     if(is_ended) {
-        std::cout << "\n\n\n\n\n\n\nGAME HAS ENDED!!!!!\n\n\n\n\n\n\n";
+        end_game();
     }
 
+    if(current_player->is_in_game()) {
+        current_player->set_status("Playing...");
+        mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+    }
 }
 
 bool Game::is_checked(int index, const int (&board_copy)[14][14]) {
@@ -1280,4 +1311,17 @@ bool Game::get_is_online()
 int Game::get_online_player()
 {
     return local_player;
+}
+
+int Game::active_players()
+{
+    int count = 0;
+    for(int i = 0; i < 4; i++)
+    {
+        if(!players[i]->is_in_game())
+        {
+            count ++;
+        }
+    }
+    return count;
 }

@@ -68,3 +68,11 @@ bool Player::get_is_online() const {
 void Player::set_is_online() {
     is_online = true;
 }
+
+std::string Player::get_status() {
+    return status;
+}
+
+void Player::set_status(std::string status) {
+    this->status = status;
+}

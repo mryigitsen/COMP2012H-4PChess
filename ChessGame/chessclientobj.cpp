@@ -116,6 +116,21 @@ void ChessClientObj::receive()
                 widget->processPossibleBots();
                 }
         }
+
+        if(command == "dead")
+                {
+                    int player;
+                    ss >> player;
+                    game->deactivate_player(player, "Disconnected");
+                    widget->resetColors(true);
+                    int active = game->active_players();
+                    qDebug() << active;
+                    if(game->active_players() == 1)
+                    {
+                        game->end_game();
+                    }
+                }
+
     }
 }
 

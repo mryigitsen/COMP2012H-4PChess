@@ -14,8 +14,10 @@
 #include "pieces/Rook.h"
 #include "Player.h"
 #include "chessclientobj.h"
+#include "mainwindow.h"
 class Player;
 class ChessClientObj;
+class MainWindow;
 class Game {
 public:
     struct Tile {
@@ -29,13 +31,16 @@ public:
     };
     int get_local_player();
 
-    Game(ChessClientObj *client = nullptr, int botCount = 0, bool online = false, bool firstOnline = true);
+    Game(ChessClientObj *client = nullptr, int botCount = 0, bool online = false, bool firstOnline = true, MainWindow *mw = nullptr);
 
     int get_current_turn() const;
 
     void next_turn();
 
     void print_board();
+    void end_game();
+    int active_players();
+
 
     void delete_piece(int x, int y);
 
@@ -66,6 +71,9 @@ public:
     int get_online_player();
 
     Player* get_player_at(int index);
+
+    void deactivate_player(int index, std::string status);
+
 private:
     //local player is only being used IF THIS IS AN ONLINE GAME
     int local_player;
@@ -75,6 +83,8 @@ private:
     bool is_ended = false;
     bool is_online = false;
     ChessClientObj *client = nullptr;
+    MainWindow *mw;
+
     ~Game();
 
     struct Coordinates {

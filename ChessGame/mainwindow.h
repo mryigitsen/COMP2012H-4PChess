@@ -20,6 +20,8 @@ public:
 
     void update_scores(int player_1_score, int player_2_score, int player_3_score, int player_4_score);
 
+    void update_status(std::string player_1_status, std::string player_2_status, std::string player_3_status, std::string player_4_status);
+
 private:
     Ui::MainWindow *ui;
 

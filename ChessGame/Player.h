@@ -5,6 +5,7 @@
 #ifndef INC_4PCHESS_PLAYER_H
 #define INC_4PCHESS_PLAYER_H
 //#include "Game.h"
+#include <string>
 
 class Game;
 
@@ -18,6 +19,7 @@ private:
     Game &game;
     bool is_bot = false;
     bool is_online = false;
+    std::string status = "Waiting...";
 
 public:
     enum class Direction {
@@ -55,6 +57,9 @@ public:
     void set_is_online();
     int num_pieces = 0;
     Piece *pieces[16];
+
+    std::string get_status();
+    void set_status(std::string);
 };
 
 

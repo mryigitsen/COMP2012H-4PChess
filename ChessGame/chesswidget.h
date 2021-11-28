@@ -1,5 +1,3 @@
-//
-
 #ifndef CHESSWIDGET_H
 #define CHESSWIDGET_H
 
@@ -8,34 +6,42 @@
 #include <QGridLayout>
 #include <QSignalMapper>
 #include "Game.h"
-
+#include "chessclientobj.h"
+#include "mainwindow.h"
+class ChessClientObj;
+class MainWindow;
 class ChessWidget : public QWidget {
-
     Q_OBJECT
-    public:
-        explicit ChessWidget(int botCount = 0, QWidget *parent = nullptr);
+public:
+    explicit ChessWidget(ChessClientObj *client, int botCount = 0, bool online = false, bool firstOnline = true, MainWindow *mw = nullptr, QWidget *parent = nullptr);
+    void resetColors(bool);
+    void processPossibleBots();
+private:
+    int chosenx = 0;
+    int choseny = 0;
+    std::vector <Piece::Coordinates> current_piece_vec;
+    Game *game;
+    MainWindow *mw;
 
-    private:
-        int chosenx = 0;
-        int choseny = 0;
-        Game *game;
-        std::vector <Piece::Coordinates> current_piece_vec;
-        QPushButton *button_arr[14][14];
+    int heightForWidth(int) const;
 
-        int heightForWidth(int) const;
+    bool offline;
+    QPushButton *button_arr[14][14];
 
-        bool offline;
+    void initMap(QGridLayout *, QSignalMapper *, Game *);
 
-        void initMap(QGridLayout *, QSignalMapper *, Game *);
+    void handle_valid_moves(Piece::Coordinates) const;
 
-        void handle_valid_moves(Piece::Coordinates) const;
+    bool check_piece(Piece::Coordinates);
 
-        bool check_piece(Piece::Coordinates);
 
-        void resetColors(bool);
+private
+    slots:
+            void handleButtonClick(int);
 
-    private slots:
-        void handleButtonClick(int);
+    signals:
+
+
 };
 
 #endif // CHESSWIDGET_H

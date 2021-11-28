@@ -1,4 +1,6 @@
 //
+// Created by Yigit Sen on 13/11/2021.
+//
 
 #ifndef INC_4PCHESS_GAME_H
 #define INC_4PCHESS_GAME_H
@@ -11,52 +13,74 @@
 #include "pieces/Queen.h"
 #include "pieces/Rook.h"
 #include "Player.h"
-
+#include "chessclientobj.h"
 class Player;
-
+class ChessClientObj;
 class Game {
+public:
+    struct Tile {
+        Piece *piece;
+        bool is_activated = true;
 
-    private:
-        Player *players[4];
-        int player_turn = 0;
-        int turn_number;
-        bool is_ended = false;
+        // void operator=(const Tile& tile) {
+        //     *(this->piece) = *(tile.piece);
+        //     this->is_activated = tile.is_activated;
+        // }
+    };
+    int get_local_player();
 
-        ~Game();
+    Game(ChessClientObj *client = nullptr, int botCount = 0, bool online = false, bool firstOnline = true);
 
-    public:
-        struct Tile {
-            Piece *piece;
-            bool is_activated = true;
-        };
+    int get_current_turn() const;
 
-        Tile board[14][14];
+    void next_turn();
 
-        Game(int botCount = 0);
+    void print_board();
 
-        void print_board();
+    void delete_piece(int x, int y);
 
-        bool in_boundaries(int x, int y);
+    Tile board[14][14];
 
-        Piece *get_piece(int x, int y);
+    bool in_boundaries(int x, int y);
 
-        void movePiece(int initX, int initY, int destX, int destY);
+    Piece *get_piece(int x, int y);
 
-        bool is_checked(int index, const int (&board_copy)[14][14]);
+    void movePiece(int initX, int initY, int destX, int destY);
 
-        int is_checked_player(int index, const int (&board_copy)[14][14]);
+    bool is_checked(int index, const int (&board_copy)[14][14]);
 
-        void create_board_copy(int current_turn, int (&board_copy)[14][14]);
+    int is_checked_player(int index, const int (&board_copy)[14][14]);
 
-        void make_turn();
+    void create_board_copy(int current_turn, int (&board_copy)[14][14]);
 
-        int get_cur_player();
+    void make_turn();
 
-        Player* get_cur_player_pointer() const;
+    int get_cur_player();
 
-        void bot_move_piece();
+    Player* get_cur_player_pointer() const;
 
-        int get_random_number(int min, int max);
+    void bot_move_piece();
+
+    bool get_is_online();
+
+    int get_online_player();
+
+    Player* get_player_at(int index);
+private:
+    //local player is only being used IF THIS IS AN ONLINE GAME
+    int local_player;
+    Player *players[4];
+    int player_turn = 0;
+    int turn_number;
+    bool is_ended = false;
+    bool is_online = false;
+    ChessClientObj *client = nullptr;
+    ~Game();
+
+    struct Coordinates {
+        int x_coordinate;
+        int y_coordinate;
+    };
 };
 
 

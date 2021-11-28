@@ -1,3 +1,6 @@
+//
+// Created by Yigit Sen on 13/11/2021.
+//
 
 #include "Game.h"
 #include "Player.h"
@@ -11,29 +14,123 @@ namespace Random_Generator{
 std::mt19937 mersenne{static_cast<std::mt19937::result_type>(std::time(nullptr))};
 }
 
-int Game::get_random_number(int min, int max) {
+int get_random_number(int min, int max) {
     std::uniform_int_distribution<int> uniform_dist(min, max);
     return uniform_dist(Random_Generator::mersenne);
 }
 
-Game::Game(int botCount) {
+Game::Game(ChessClientObj *client, int botCount, bool online, bool firstOnline) : is_online(online), client(client){
     turn_number = 0;
-
-    for (int i = 0; i < 4; ++i) {
-        players[i] = new Player(*this);
-        players[i]->set_index(i);
-    }
-
-    for(int i = 0; i < botCount; ++i)
+    //First player is always 0
+    std::cout<<"BOT" << botCount <<std::endl;
+    if(online && firstOnline)
     {
-        int index = get_random_number(1, 3);
-        if(players[index]->get_is_bot())
-        {
-            --i;
-            continue;
+        std::cout<<"FIRST ONLINE" <<std::endl;
+
+        for (int i = 0; i < 4; ++i) {
+            players[i] = new Player(*this);
+            players[i]->set_index(i);
         }
-        players[index]->set_is_bot();
+        client->Register(QString::fromStdString(to_string(0)), false);
+
+        for(int i = 0; i < botCount; ++i)
+        {
+            int index = get_random_number(1, 3);
+            if(players[index]->get_is_bot())
+            {
+                --i;
+                continue;
+            }
+            players[index]->set_is_bot();
+            client->Register(QString::fromStdString(to_string(index)), true);
+            client->flush();
+
+        }
+        local_player = 0;
+        for(int i = 1; i < 4; ++i)
+        {
+            if(!players[i]->get_is_bot())
+            {
+                players[i]->set_is_online();
+            }
+        }
+        client->registerGamePtr(this);
     }
+
+
+    // Setup based on the received string
+    else if(online && !firstOnline)
+    {
+        std::cout<<"LATER ONLINE" <<std::endl;
+
+        for (int i = 0; i < 4; ++i) {
+            players[i] = new Player(*this);
+            players[i]->set_index(i);
+        }
+
+        for_each(client->botList.begin(), client->botList.end(), [&](int i){std::cout << "BOT " << i << std::endl; players[i]->set_is_bot();});
+        int flag = 0;
+
+        //Those that are bot are definitely online joining people
+        // Item 0 is always online
+        players[0]->set_is_online();
+
+        for(int i = 1; i < 4; ++i)
+        {
+            if(players[i]->get_is_bot())
+            {
+                players[i]->set_is_online();
+            }
+            if(!players[i]->get_is_bot() && flag)
+            {
+                players[i]->set_is_online();
+            }
+            //We put ourselves to the first emptiness
+            else if(!players[i]->get_is_bot() &&!flag)
+            {
+                //This will be the first player to play.
+                flag = i;
+                local_player = i;
+            }
+
+        }
+        client->Register(QString::fromStdString(to_string(flag)), false);
+        client->flush();
+        client->registerGamePtr(this);
+
+    }
+    // Not an online game
+    else
+    {
+        for (int i = 0; i < 4; ++i) {
+            players[i] = new Player(*this);
+            players[i]->set_index(i);
+        }
+
+        for(int i = 0; i < botCount; ++i)
+        {
+            int index = get_random_number(1, 3);
+            if(players[index]->get_is_bot())
+            {
+                --i;
+                continue;
+            }
+            players[index]->set_is_bot();
+        }
+        local_player = 0;
+
+    }
+//    for(int i = 0; i < 4; ++i)
+//    {
+//       std::cout<<players[i]->get_is_bot() <<std::endl;
+//    }
+
+//    for(int i = 0; i < 4; ++i)
+//    {
+//       std::cout<<players[i]->get_is_online() <<std::endl;
+//    }
+    qDebug() << "DONE";
+
     for (int y = 0; y < 14; ++y) {
         for (int x = 0; x < 14; ++x) {
             board[x][y].piece = nullptr;
@@ -120,6 +217,10 @@ Game::~Game() {
     }
 }
 
+Player* Game::get_player_at(int index) {
+    return players[index];
+}
+
 void Game::print_board() {
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
@@ -171,11 +272,6 @@ void Game::print_board() {
         std::cout << std::endl;
     }
 }
-// void Game::delete_piece(int x, int y)
-// {
-//     delete board[x][y].piece;
-//     board[x][y].piece= nullptr;
-// }
 
 Piece *Game::get_piece(int x, int y) {
     if (in_boundaries(x, y) && board[x][y].piece != nullptr) {
@@ -183,7 +279,10 @@ Piece *Game::get_piece(int x, int y) {
     }
     return nullptr;
 }
-
+int Game::get_local_player()
+{
+    return local_player;
+}
 bool Game::in_boundaries(int x, int y) {
     if (x < 14 && x > -1 && y < 14 && y > -1 && board[x][y].is_activated == true) {
         return true;
@@ -196,12 +295,17 @@ void Game::movePiece(int initX, int initY, int destX, int destY) //This needs to
     if ((initX == destX) && (initY == destY)) {
         return;
     }
+    Piece *test = board[initX][initY].piece;
+    qDebug() << test << " " << initX << initY << destX << destY;
+
     int player_num = board[initX][initY].piece->which_player();
 
     //Capturing
     if (board[destX][destY].piece != nullptr) {
         players[player_num]->increase_score(board[destX][destY].piece->get_point());
-        board[destX][destY].piece->set_is_captured(true);
+        board[destX][destY].piece->set_is_captured();
+        board[destX][destY].piece->setX_0();
+        board[destX][destY].piece->setY_0();
     }
 
     //PAWN PROMOTION
@@ -359,8 +463,14 @@ void Game::movePiece(int initX, int initY, int destX, int destY) //This needs to
         board[destX][destY].piece->setCoordinates(destX, destY);
         board[destX][destY].piece->set_has_moved(true);
     }
+    if(is_online && !get_cur_player_pointer()->get_is_online() && !get_cur_player_pointer()->get_is_bot())
+    {
+        client->move(initX, initY, destX, destY);
+    }
     make_turn();
-    print_board();
+
+
+    //print_board();
 }
 
 void Game::bot_move_piece() {
@@ -371,7 +481,7 @@ void Game::bot_move_piece() {
     //To get a random move out of a player's possible moves list
     do{
         index = get_random_number(0, 15);
-        if(!players[player_num]->pieces[index]->get_is_captured()){
+        if(!players[player_num]->pieces[index]->get_is_captured() && in_boundaries(players[player_num]->pieces[index]->getX(), players[player_num]->pieces[index]->getY()) == true){
             for(int i = 0; i < 14; ++i) {
                 for(int j = 0; j < 14; ++j) {
                     if(players[player_num]->pieces[index]->get_possible_move_at(i, j) == 2){
@@ -386,8 +496,16 @@ void Game::bot_move_piece() {
 
     int move_index = get_random_number(0, possible_move_list.size() - 1);
 
-    movePiece(players[player_num]->pieces[index]->getX(), players[player_num]->pieces[index]->getY(), possible_move_list[move_index][0], possible_move_list[move_index][1]);
+    int initX = players[player_num]->pieces[index]->getX();
+    int initY = players[player_num]->pieces[index]->getY();
+    int destX = possible_move_list[move_index][0];
+    int destY = possible_move_list[move_index][1];
+    std::cout << "DEBUG" << std::endl;
 
+    std::cout << in_boundaries(initX, initY) << std::endl;
+    std::cout << get_piece(initX, initY) << std::endl;
+    movePiece(initX, initY, destX, destY);
+    if(is_online) { client->moveBot(initX, initY, destX, destY);}
     return;
 }
 
@@ -1152,4 +1270,14 @@ int Game::is_checked_player(int index, const int (&board_copy)[14][14]) {
     }
 
     return ((checkmater_index > 3) ? checkmater_index - 4 : checkmater_index);
+}
+
+
+bool Game::get_is_online()
+{
+    return is_online;
+}
+int Game::get_online_player()
+{
+    return local_player;
 }

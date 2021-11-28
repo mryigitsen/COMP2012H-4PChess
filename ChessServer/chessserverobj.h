@@ -26,15 +26,17 @@ private:
         bool isBot;
     };
     QTcpServer *server;
-    vector<QTcpSocket *> connectionlist;
+    list<QTcpSocket *> connectionlist;
     //index identifies which player # it is.
     vector<player> playerList;
     void broadcast(QString str = "");
+    void sendInfo(QTcpSocket *socket);
 
     void getPrevPlayersInfo(QTcpSocket *socket);
     void registerPlayer(QString player, QTcpSocket *socket, bool isBot);
     void broadcastExcept(QString str, QTcpSocket *except);
     void send(QString msg, QTcpSocket *socket);
+    void broadcastRemoval(string s);
 
 
 };

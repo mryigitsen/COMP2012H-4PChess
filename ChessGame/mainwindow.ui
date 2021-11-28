@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1324</width>
+    <width>1460</width>
     <height>900</height>
    </rect>
   </property>
@@ -73,14 +73,219 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout"/>
    </widget>
+   <widget class="QLabel" name="Player_1_Label">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>10</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Player 1: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_3_Label">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>400</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Player 3: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_4_Label">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>600</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Player 4:  </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_1_Score">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>10</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_3_Score">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>400</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_4_Score">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>600</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>10</y>
+      <width>211</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 38, 255);</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>200</y>
+      <width>211</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 228, 0);</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>400</y>
+      <width>211</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 255, 18);</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>600</y>
+      <width>211</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 12, 0);</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_2_Label">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>200</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Player 2: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player_2_Score">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>200</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>groupBox_3</zorder>
+   <zorder>groupBox_4</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>horizontalLayoutWidget</zorder>
+   <zorder>Player_1_Label</zorder>
+   <zorder>Player_3_Label</zorder>
+   <zorder>Player_4_Label</zorder>
+   <zorder>Player_1_Score</zorder>
+   <zorder>Player_3_Score</zorder>
+   <zorder>Player_4_Score</zorder>
+   <zorder>Player_2_Label</zorder>
+   <zorder>Player_2_Score</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1324</width>
-     <height>24</height>
+     <width>1460</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -1,4 +1,3 @@
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPainter>
@@ -7,22 +6,20 @@
 #include "chessclientobj.h"
 #include <unistd.h>
 
-MainWindow::MainWindow(int count, QWidget *parent)
+MainWindow::MainWindow(ChessClientObj *client, int count, bool online, bool firstOnline, QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    ChessWidget *cw = new ChessWidget(count);
+    ChessWidget *cw = new ChessWidget(client, count, online, firstOnline, this, this);
     ui->horizontalLayout->addWidget(cw);
-    ChessClientObj *client = new ChessClientObj("127.0.0.1", 1214, this);
-    client->isConnected();
-    client->send("Hello server\n");
-    client->send("reg 0 true\n");
-    client->send("reg 1 true\n");
-    client->send("reg 2 false\n");
-    client->send("reg 3 true\n");
-
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::update_scores(int player_1_score, int player_2_score, int player_3_score, int player_4_score) {
+    ui->Player_1_Score->setText(QString::number(player_1_score));
+    ui->Player_2_Score->setText(QString::number(player_2_score));
+    ui->Player_3_Score->setText(QString::number(player_3_score));
+    ui->Player_4_Score->setText(QString::number(player_4_score));
+}

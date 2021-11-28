@@ -88,4 +88,4 @@ RESOURCES += \
     img/DeactivatedPlayer/rook.png
 
 
-QT_QUICK_CONTROLS_STYLE = material ./app
+QT_QUICK_CONTROLS_STYLE = universal ./app

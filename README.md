@@ -3,9 +3,9 @@
 ### DISCLAIMER
 As our team mainly used Apple devices to develop this app, we weren't able to test the code on a Windows device. As a result, the graphics and the texts might not be fully shown on a Windows machine. 
 
-Similarly, we weren't able to achieve resizeability, so we suggest playing around with the computer's resolution settings for the optimal view.
+Similarly, we weren't able to achieve resizeability, so we suggest playing around with the computer's resolution settings for the optimal view. In Apple, on 16-Inch, it works flawlessly. On 13-Inch, you'll need to make it full size.
 
-We highly suggest you to use an Apple device (Intel or Apple Silicon doesn't matter) to ensure maximum performance. 
+We highly suggest you to use an Apple device (Intel or Apple Silicon doesn't matter) to ensure maximum performance.
 
 ## How to run? 
 This code comes with two different Qt Projects: ChessGame and ChessClient. You will be able to run ChessGame without the Server, however, you'll have to play locally. In order to play with different computers: 

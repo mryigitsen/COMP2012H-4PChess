@@ -8,6 +8,10 @@ ChessClientObj::ChessClientObj(QObject *parent) : QObject(parent)
 
 bool ChessClientObj::setupSocket(QString address, int port)
 {
+    if(!first)
+    {
+        deregister();
+    }
     qDebug() << "in SetupSocket";
     socket = new QTcpSocket(this);
     socket->connectToHost(address, port);
@@ -24,29 +28,44 @@ bool ChessClientObj::setupSocket(QString address, int port)
 
             if(command == "info")
             {
+                bool flag = false;
                 while(!ss.eof())
                 {
                     string x = "";
                     ss >> x;
-                    if(x != "count")
+                    std::cout<< x<<std::endl;
+                    if(x == "other")
                     {
-                        botList.push_back(stoi(x));
+                        flag = true;
                     }
-                    if(x == "count")
+                    else if(x == "count")
                     {
                         ss >> numPlayers;
                     }
+                    else
+                    {
+                        if(!flag)
+                        {
+                            botList.push_back(stoi(x));
+                        }
+                        else
+                        {
+                            phyList.push_back(stoi(x));
+                        }
+                    }
+
                 }
             }
         }
 
 
-        signature = socket->localAddress().toString() + (QString::number(socket->localPort()));
+        signature = address + (QString::number(socket->localPort()));
         //signature.append(socket->localAddress().toString());
         //signature.append(socket->localPort());
         connect(socket, SIGNAL(readyRead()), this, SLOT(receive()));
-
+        first = false;
         return true;
+
     }
     else
     {
@@ -98,6 +117,19 @@ void ChessClientObj::receive()
                 }
             }
         }
+        if(command == "START")
+        {
+            if(!started)
+            {
+            if(box != nullptr)
+            {   qDebug() << "NOTNULL";
+                box->accept();
+            }
+            menu->close();
+            main->show();
+            started = true;
+            }
+        }
 
         if(command == "move")
         {
@@ -127,7 +159,7 @@ void ChessClientObj::receive()
                     qDebug() << active;
                     if(game->active_players() == 1)
                     {
-                        game->end_game();
+                        game->end_game(true);
                     }
                 }
 
@@ -180,9 +212,24 @@ void ChessClientObj::getNum()
     send("num");
 }
 
+void ChessClientObj::deregister()
+{
+    send("deregister");
+}
+
 void ChessClientObj::flush()
 {
     socket->flush();
+}
+void ChessClientObj::preRegister(int count)
+{
+    send("prereg "+ QString::fromStdString(to_string(count)));
+
+}
+
+void ChessClientObj::registerMainWindow(MainWindow *mw)
+{
+    main = mw;
 }
 
 void ChessClientObj::registerGamePtr(Game *g)
@@ -192,4 +239,25 @@ void ChessClientObj::registerGamePtr(Game *g)
 void ChessClientObj::registerWidget(ChessWidget *cw)
 {
     widget = cw;
+}
+
+void ChessClientObj::registerMenuWindow(MenuWindow *mw)
+{
+    menu = mw;
+}
+
+void ChessClientObj::registerWaitingPopup(QMessageBox *bx)
+{
+    qDebug() << "here";
+    box = bx;
+}
+void ChessClientObj::close()
+{
+    qDebug() << "here";
+    socket->disconnect();
+}
+
+int ChessClientObj::getCount()
+{
+    return numPlayers;
 }

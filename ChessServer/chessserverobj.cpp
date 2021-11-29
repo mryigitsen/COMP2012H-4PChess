@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include <QThread>
+#include "algorithm"
 ChessServerObj::ChessServerObj(QObject *parent) : QObject(parent)
  {
     server = new QTcpServer(this);
@@ -22,7 +23,7 @@ void ChessServerObj::newConnection()
     QTcpSocket *socket = server->nextPendingConnection();
 
     //Add it to the currently connected sockets list.
-    connectionlist.push_back(socket);
+    connectionlist.insert({socket, 0});
     //Add disconnecting and receiving slots
     connect(socket,SIGNAL(disconnected()),this,SLOT(onDisconnect()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(onReceive()));
@@ -38,21 +39,27 @@ void ChessServerObj::newConnection()
 
 void ChessServerObj::onDisconnect()
 {
+    qDebug() <<"DISCONNECT";
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(QObject::sender());
     qDebug() << "the ip " << socket->localAddress().toString() << " is disconnected";
-    connectionlist.remove(socket);
+    int count = connectionlist.find(socket)->second;
+    connectionlist.erase(socket);
+    qDebug() << "LATEST COUNT " << count;
     //remove(connectionlist.begin(), connectionlist.end(),socket);
-    //Remove every player from that ip address connected to the game    
+    //Remove every player from that ip address connected to the game
     vector<string> playerNums;
     for(unsigned long i = 0; i < playerList.size(); ++i)
     {
         if(playerList[i].socket == socket)
         {
+            qDebug() << "SOCKET MATCH";
             playerNums.push_back(playerList[i].player);
             playerList.erase(playerList.begin()+i);
             --i;
         }
     }
+    count_players-= count;
+    qDebug() << count_players << " COUNT";
     socket->deleteLater();
 
     //Inform every player
@@ -94,6 +101,23 @@ void ChessServerObj::onReceive()
             broadcast("START");
         }
     }
+    if(command == "prereg")
+    {
+        qDebug() << input;
+
+        int newCount = 0;
+        ss >> newCount;
+        connectionlist.erase(socket);
+        connectionlist.insert({socket, newCount});
+        count_players += newCount;
+        qDebug() << count_players;
+
+        if(count_players == 4)
+        {
+            qDebug() << "SIZE == 4";
+            broadcast("START");
+        }
+    }
     if(command == "move" || command == "deactive")
     {
         std::cout << "here"<<std::endl;
@@ -110,6 +134,11 @@ void ChessServerObj::onReceive()
         qDebug() << input;
         send(QString::fromStdString(to_string(playerList.size())), socket);
     }
+    if(command == "deregister")
+    {
+        deregister(socket);
+
+    }
     //qDebug() << input;
     }
 }
@@ -121,25 +150,53 @@ void ChessServerObj::sendInfo(QTcpSocket *socket)
         if(p.isBot)
             msg.append(p.player + " ");
     });
+    msg.append("other ");
+    for_each(playerList.begin(), playerList.end(), [&](player p){
+        if(!p.isBot)
+            msg.append(p.player + " ");
+    });
     msg.append("count " + to_string(playerList.size()));
 
     send(QString::fromStdString(msg), socket);
 
 }
+
+void ChessServerObj::deregister(QTcpSocket *socket)
+{
+    int count = connectionlist.find(socket)->second;
+
+    //Find the player on the playerList and delete those
+
+    for(unsigned long i = 0; i < playerList.size(); ++i)
+    {
+        if(playerList[i].socket == socket)
+        {
+            qDebug() << "SOCKET MATCH";
+            playerList.erase(playerList.begin()+i);
+            --i;
+        }
+    }
+
+    //Re-set the player count to 0 in connection map
+    connectionlist.erase(socket);
+    connectionlist.insert({socket, 0});
+
+    count_players -= count;
+
+}
+
 void ChessServerObj::broadcast(QString str)
 {
-    for_each(connectionlist.begin(), connectionlist.end(), [&](QTcpSocket *socket){
+
+    for ( const auto &p : connectionlist ) {
+        QTcpSocket *socket = p.first;
         str.append("\n");
         socket->write(str.toUtf8());
         socket->flush();
         socket->waitForBytesWritten(1000);
-        });
 }
-void ChessServerObj::broadcastExcept(QString str, QTcpSocket *except)
-{
-    for_each(connectionlist.begin(), connectionlist.end(), [&](QTcpSocket *socket){
-       if(socket->peerAddress() != except->peerAddress() && socket->peerPort() != socket->peerPort()) send(str, socket);});
 }
+
 void ChessServerObj::registerPlayer(QString playerind, QTcpSocket *socket, bool isBot)
 {
     if(playerList.size()!= 4)
@@ -158,6 +215,7 @@ void ChessServerObj::send(QString msg, QTcpSocket *socket)
 {
     qDebug() << msg;
     msg.append("\t\n");
+    qDebug() << "SENDING";
     socket->write(msg.toUtf8());
     socket->flush();
     socket->waitForBytesWritten(1000);

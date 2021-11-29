@@ -13,7 +13,7 @@ class Piece;
 
 class Player {
 private:
-    bool is_active = false;
+    bool is_active = true;
     int score = 0;
     int indexNum = 0;
     Game &game;

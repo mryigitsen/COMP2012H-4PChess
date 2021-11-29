@@ -78,12 +78,12 @@
      <rect>
       <x>1100</x>
       <y>50</y>
-      <width>101</width>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 24pt &quot;Arial&quot;;</string>
+     <string notr="true">font: 75 24pt &quot;Arial&quot;;</string>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Player 1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -94,7 +94,7 @@
      <rect>
       <x>1100</x>
       <y>440</y>
-      <width>101</width>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
@@ -110,7 +110,7 @@
      <rect>
       <x>1100</x>
       <y>640</y>
-      <width>101</width>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
@@ -126,7 +126,7 @@
      <rect>
       <x>1100</x>
       <y>90</y>
-      <width>101</width>
+      <width>211</width>
       <height>41</height>
      </rect>
     </property>
@@ -142,7 +142,7 @@
      <rect>
       <x>1100</x>
       <y>480</y>
-      <width>101</width>
+      <width>211</width>
       <height>41</height>
      </rect>
     </property>
@@ -158,7 +158,7 @@
      <rect>
       <x>1100</x>
       <y>680</y>
-      <width>101</width>
+      <width>211</width>
       <height>41</height>
      </rect>
     </property>
@@ -169,12 +169,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="Player_1_Box">
     <property name="geometry">
      <rect>
       <x>1090</x>
       <y>50</y>
-      <width>241</width>
+      <width>271</width>
       <height>171</height>
      </rect>
     </property>
@@ -185,12 +185,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
+   <widget class="QGroupBox" name="Player_2_Box">
     <property name="geometry">
      <rect>
       <x>1090</x>
       <y>240</y>
-      <width>241</width>
+      <width>271</width>
       <height>181</height>
      </rect>
     </property>
@@ -201,12 +201,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox_3">
+   <widget class="QGroupBox" name="Player_3_Box">
     <property name="geometry">
      <rect>
       <x>1090</x>
       <y>440</y>
-      <width>241</width>
+      <width>271</width>
       <height>181</height>
      </rect>
     </property>
@@ -217,12 +217,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox_4">
+   <widget class="QGroupBox" name="Player_4_Box">
     <property name="geometry">
      <rect>
       <x>1090</x>
       <y>640</y>
-      <width>241</width>
+      <width>271</width>
       <height>181</height>
      </rect>
     </property>
@@ -238,7 +238,7 @@
      <rect>
       <x>1100</x>
       <y>240</y>
-      <width>101</width>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
@@ -254,7 +254,7 @@
      <rect>
       <x>1100</x>
       <y>280</y>
-      <width>91</width>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
@@ -270,7 +270,7 @@
      <rect>
       <x>1100</x>
       <y>720</y>
-      <width>221</width>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
@@ -286,7 +286,7 @@
      <rect>
       <x>1100</x>
       <y>520</y>
-      <width>221</width>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
@@ -302,7 +302,7 @@
      <rect>
       <x>1100</x>
       <y>320</y>
-      <width>221</width>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
@@ -318,7 +318,7 @@
      <rect>
       <x>1100</x>
       <y>130</y>
-      <width>221</width>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
@@ -329,10 +329,10 @@
      <string/>
     </property>
    </widget>
-   <zorder>groupBox_3</zorder>
-   <zorder>groupBox_4</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>groupBox</zorder>
+   <zorder>Player_3_Box</zorder>
+   <zorder>Player_4_Box</zorder>
+   <zorder>Player_2_Box</zorder>
+   <zorder>Player_1_Box</zorder>
    <zorder>horizontalLayoutWidget</zorder>
    <zorder>Player_1_Label</zorder>
    <zorder>Player_3_Label</zorder>

@@ -9,8 +9,12 @@
 #include <QTcpSocket>
 #include "Game.h"
 #include "chesswidget.h"
+#include "mainwindow.h"
+#include "menuwindow.h"
+#include "QMessageBox"
 using namespace std;
 class ChessWidget;
+class MenuWindow;
 class ChessClientObj : public QObject
 {
     Q_OBJECT
@@ -22,26 +26,40 @@ public:
     void Register(QString index, bool isBot);
     void move(int initX, int initY, int destX, int destY);
     void moveBot(int initX, int initY, int destX, int destY);
-
+    void deregister();
     void getNum();
     void flush();
-    int numPlayers = 0;
     vector<int> botList;
-    bool wait();
+    vector<int> phyList;
 
+    bool wait();
+    void preRegister(int count);
+    void registerMainWindow(MainWindow *mw);
     void registerGamePtr(Game *g);
     void registerWidget(ChessWidget *cw);
+    void registerMenuWindow(MenuWindow *mw);
+    void registerWaitingPopup(QMessageBox *bx);
+    QString signature = "";
+    int getCount();
 
+
+    void close();
 
 signals:
 
 public slots:
     void receive();
 private:
+    int numPlayers = 0;
+
+    MainWindow *main;
+    MenuWindow *menu;
     ChessWidget *widget;
     Game *game;
     QTcpSocket *socket;
-    QString signature = "";
+    QMessageBox *box;
+    bool started = false;
+    bool first = true;
 };
 
 

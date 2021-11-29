@@ -22,6 +22,8 @@ public:
 
     void update_status(std::string player_1_status, std::string player_2_status, std::string player_3_status, std::string player_4_status);
 
+    void set_bot_notif(bool player_2_bot, bool player_3_bot, bool player_4_bot);
+
 private:
     Ui::MainWindow *ui;
 

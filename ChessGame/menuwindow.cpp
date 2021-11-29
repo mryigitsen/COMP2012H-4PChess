@@ -4,6 +4,8 @@
 #include <iostream>
 #include "qinputdialog.h"
 #include "qmessagebox.h"
+#include "unistd.h"
+
 MenuWindow::MenuWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MenuWindow)
@@ -22,49 +24,17 @@ MenuWindow::~MenuWindow()
 void MenuWindow::on_start_game_clicked()
 {
     std::cout<<"Button Clicked" <<std::endl;
-
-    std::cout<<ui->player_count->currentText().toInt()<<std::endl;
-    MainWindow *m = new MainWindow(nullptr, 4-ui->player_count->currentText().toInt(), ui->is_online->isChecked(), true );
+    QInputDialog* inputDialog = new QInputDialog(this);
+    QStringList items({"0","1","2","3"});
+    int bots = inputDialog->getItem(this, "Multiplayer Setup", "How many bots do you want to have?", items ).toInt();
+    MainWindow *m = new MainWindow(nullptr, bots, false, true );
     m->setAttribute(Qt::WA_DeleteOnClose);
     m->show();
     close();
-}
-
-void MenuWindow::on_join_game_clicked()
-{
-    std::cout<< "JG Clicked" <<std::endl;
-    QInputDialog* inputDialog = new QInputDialog(this);
-    QString ip = "";
-    int port = -1;
-    ip = inputDialog->getText(this, "Setup Server", "Please enter the IP address of the server");
-    if(ip != "")
-    {
-        port = inputDialog->getInt(this, "Server Setup", "Please enter the port number of the server");
-    }
     delete inputDialog;
-    if(ip != "" && port > 0)
-    {
-        //TEST CONNECTION HERE
-        bool test = connect->setupSocket(ip, port);
-        if(!test)
-        {
-            QMessageBox box(QMessageBox::Warning, "ERROR", "The server connection does not work. Are you sure you are putting in the correct address?" );
-            box.exec();
-        }
-        else
-        {
-            //connect->wait();
-            //connect->send("getinfo");
-            //connect->getNum();
 
-
-            MainWindow *m = new MainWindow(connect, connect->numPlayers, true, false );
-            m->setAttribute(Qt::WA_DeleteOnClose);
-            m->show();
-            close();
-        }
-    }
 }
+
 
 void MenuWindow::on_create_game_clicked()
 {
@@ -72,10 +42,10 @@ void MenuWindow::on_create_game_clicked()
     QInputDialog* inputDialog = new QInputDialog(this);
     QString ip = "";
     int port = -1;
-    ip = inputDialog->getText(this, "Setup Server", "Please enter the IP address of the server");
+    ip = inputDialog->getText(this, "Multiplayer Server", "Please enter the IP address of the server");
     if(ip != "")
     {
-        port = inputDialog->getInt(this, "Server Setup", "Please enter the port number of the server");
+        port = inputDialog->getInt(this, "Multiplayer Setup", "Please enter the port number of the server");
     }
     if(ip != "" && port > 0)
     {
@@ -90,12 +60,45 @@ void MenuWindow::on_create_game_clicked()
         }
         else
         {
-            delete inputDialog;
-            int bot = inputDialog->getInt(this, "Server Setup", "How many bots?");
-            MainWindow *m = new MainWindow(connect,bot, true, true );
+            int playerCount = connect->getCount();
+            qDebug() << playerCount;
+            MainWindow *m = nullptr;
+            int reg = 1;
+            if(playerCount == 0)
+            {
+                inputDialog->setIntMaximum(3);
+                inputDialog->setIntMinimum(0);
+                QStringList items({"0","1","2"});
+                int bot = inputDialog->getItem(this, "Multiplayer Setup", "How many bots do you want to have?", items ).toInt();
+                m = new MainWindow(connect,bot, true, true );
+                connect->registerMainWindow(m);
+                connect->registerMenuWindow(this);
+                reg = bot +1;
+            }
+
+            else
+            {
+                m = new MainWindow(connect, connect->getCount(), true, false );
+                connect->registerMainWindow(m);
+                connect->registerMenuWindow(this);
+
+            }
+            QMessageBox box(QMessageBox::Information, "Waiting", "Waiting for everyone to join the server. Please wait patiently. If you have to exit, please use cmd-alt-delete on Windows or force-quit on Mac");
+            box.setStandardButtons(QMessageBox::Cancel);
+
+            //box.setStandardButtons(0);
+            connect->registerWaitingPopup(&box);
+
+            sleep(1);
+            connect->preRegister(reg);
+
+
+            box.exec();
+
+
             m->setAttribute(Qt::WA_DeleteOnClose);
-            m->show();
-            close();
+            //m->show();
+            //close();
         }
     }
 }

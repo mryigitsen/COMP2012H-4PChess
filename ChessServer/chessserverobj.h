@@ -25,8 +25,16 @@ private:
         string player;
         bool isBot;
     };
+    struct connection
+    {
+        QTcpSocket *socket;
+        int count;
+        void setCount(int c) {count = c;};
+    };
+
+    int count_players = 0;
     QTcpServer *server;
-    list<QTcpSocket *> connectionlist;
+    map<QTcpSocket *, int> connectionlist;
     //index identifies which player # it is.
     vector<player> playerList;
     void broadcast(QString str = "");
@@ -37,8 +45,7 @@ private:
     void broadcastExcept(QString str, QTcpSocket *except);
     void send(QString msg, QTcpSocket *socket);
     void broadcastRemoval(string s);
-
-
+    void deregister(QTcpSocket *socket);
 };
 
 #endif // CHESSSERVEROBJ_H

@@ -20,7 +20,6 @@ private:
     ChessClientObj *connect;
 private slots:
     void on_start_game_clicked();
-    void on_join_game_clicked();
     void on_create_game_clicked();
 };
 

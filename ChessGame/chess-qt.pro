@@ -13,6 +13,7 @@ SOURCES += \
     Player.cpp \
     chessclientobj.cpp \
     chesswidget.cpp \
+    gameoverwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     menuwindow.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     Player.h \
     chessclientobj.h \
     chesswidget.h \
+    gameoverwindow.h \
     mainwindow.h \
     menuwindow.h \
     pieces/Bishop.h \
@@ -40,6 +42,7 @@ HEADERS += \
     pieces/Rook.h
 
 FORMS += \
+    gameoverwindow.ui \
     mainwindow.ui \
     menuwindow.ui
 

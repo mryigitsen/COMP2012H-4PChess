@@ -38,7 +38,7 @@ public:
     void next_turn();
 
     void print_board();
-    void end_game();
+    void end_game(bool end_to_disconnect);
     int active_players();
 
 

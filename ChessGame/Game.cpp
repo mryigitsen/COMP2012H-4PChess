@@ -9,6 +9,7 @@
 #include <cmath>
 #include <random>
 #include <ctime>
+#include "gameoverwindow.h"
 
 namespace Random_Generator{
 std::mt19937 mersenne{static_cast<std::mt19937::result_type>(std::time(nullptr))};
@@ -68,9 +69,8 @@ Game::Game(ChessClientObj *client, int botCount, bool online, bool firstOnline, 
             players[i]->set_index(i);
         }
 
-        for_each(client->botList.begin(), client->botList.end(), [&](int i){std::cout << "BOT " << i << std::endl; players[i]->set_is_bot();});
+        for_each(client->botList.begin(), client->botList.end(), [&](int i){std::cout << "BOT LIST " << i << std::endl; players[i]->set_is_bot();});
         int flag = 0;
-
         //Those that are bot are definitely online joining people
         // Item 0 is always online
         players[0]->set_is_online();
@@ -210,6 +210,8 @@ Game::Game(ChessClientObj *client, int botCount, bool online, bool firstOnline, 
         }
     }
     players[0]->set_status("Playing...");
+
+    mw->set_bot_notif(players[1]->get_is_bot(), players[2]->get_is_bot(), players[3]->get_is_bot());
 }
 
 Game::~Game() {
@@ -228,10 +230,6 @@ void Game::deactivate_player(int index, std::string status) {
     mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
 }
 
-void Game::end_game()
-{
-    std::cout << "\n\n\n\n\n\n\nGAME HAS ENDED!!!!!\n\n\n\n\n\n\n";
-}
 void Game::print_board() {
     for (int i = 0; i < 14; ++i) {
         for (int j = 0; j < 14; ++j) {
@@ -558,7 +556,11 @@ void Game::create_board_copy(int current_turn, int (&board_copy)[14][14]) {
 }
 
 void Game::make_turn() {
-    players[turn_number%4]->set_status("Waiting...");
+    if(players[turn_number%4]->is_in_game())
+    {
+        players[turn_number%4]->set_status("Waiting...");
+
+    }
     int current_turn;
     Player *current_player;
     do
@@ -569,17 +571,26 @@ void Game::make_turn() {
         current_player = players[current_turn];
     }
     while(!current_player->is_in_game());
-
     int board_copy[14][14];
-    create_board_copy(current_turn, board_copy);
-    if(is_checked(current_turn, board_copy)) {
-        current_player->set_status("Checked");
-        mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+    bool flag = false;
+    for(int i = 0; i < 4; i++)
+    {
+        create_board_copy(current_turn+i, board_copy);
+        if(is_checked(current_turn+i, board_copy)&& players[(player_turn+i)%4]->is_in_game()) {
+            players[(player_turn+i)%4]->set_status("Checked");
+            mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+        }
+        else{
+            if(i == 0){ flag = true;}
+
+        }
     }
-    else {
-        current_player->set_status("Playing...");
-        mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
+    if(flag)
+    {
+            players[(player_turn)%4]->set_status("Playing...");
+            mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
     }
+
 
 
     int num_moves = 0;
@@ -654,13 +665,36 @@ void Game::make_turn() {
     //if (num_moves == 0 && check_moves(original map))
 
     if(is_ended) {
-        end_game();
+        end_game(false);
     }
 
-    if(current_player->is_in_game()) {
-        current_player->set_status("Playing...");
         mw->update_status(players[0]->get_status(), players[1]->get_status(), players[2]->get_status(), players[3]->get_status());
     }
+
+void Game::end_game(bool end_to_disconnect)
+{
+    int highest_score = 0;
+    for(int i = 0; i < 4; ++i) {
+        if(players[i]->get_score() > highest_score)
+            highest_score = players[i]->get_score();
+    }
+
+    std::vector<int> highest_scores_arr(0);
+
+    for(int i = 0; i < 4; ++i) {
+        if(players[i]->get_score() == highest_score)
+            highest_scores_arr.push_back(i + 1);
+    }
+
+    highest_scores_arr.resize(4, 0);
+
+    if(is_online)
+    {
+        client->deregister();
+    }
+    GameOverWindow *gow = new GameOverWindow(end_to_disconnect, highest_scores_arr[0], highest_scores_arr[1], highest_scores_arr[2], highest_scores_arr[3]);
+    gow->show();
+    mw->close();
 }
 
 bool Game::is_checked(int index, const int (&board_copy)[14][14]) {
@@ -1318,7 +1352,7 @@ int Game::active_players()
     int count = 0;
     for(int i = 0; i < 4; i++)
     {
-        if(!players[i]->is_in_game())
+        if(players[i]->is_in_game())
         {
             count ++;
         }

@@ -1,5 +1,5 @@
-//
-
+// Knight class publicly inherits the Piece class which has all the base attributes that chess pieces should contain
+// The Knight class has its own member functions that only apply to all Knight pieces on the board
 
 #ifndef INC_4PCHESS_KNIGHT_H
 #define INC_4PCHESS_KNIGHT_H
@@ -18,7 +18,7 @@ class Knight : public Piece {
 
         virtual int list_possible_moves() override;
 
-        std::string get_img() const;
+        std::string get_img() const override;
 };
 
 

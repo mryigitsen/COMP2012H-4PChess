@@ -1,9 +1,5 @@
-//
-// Created by Yigit Sen on 13/11/2021.
-//
 
 #include "Piece.h"
-#include <vector>
 #include "../Game.h"
 
 Piece::Piece(Player &player, Game &game, int x, int y) : player{player}, game{game}, x(x), y(y), is_captured(false),

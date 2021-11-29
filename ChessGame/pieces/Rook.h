@@ -1,4 +1,5 @@
-//
+// Rook class publicly inherits the Piece class which has all the base attributes that chess pieces should contain
+// The Rook class has its own member functions that only apply to all Rook pieces on the board
 
 #ifndef INC_4PCHESS_ROOK_H
 #define INC_4PCHESS_ROOK_H

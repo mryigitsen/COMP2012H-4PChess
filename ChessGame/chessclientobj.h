@@ -2,8 +2,6 @@
 #define CHESSCLIENTOBJ_H
 
 #include <QObject>
-
-
 #include <QDebug>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -13,6 +11,7 @@
 #include "menuwindow.h"
 #include "QMessageBox"
 using namespace std;
+
 class ChessWidget;
 class MenuWindow;
 class ChessClientObj : public QObject

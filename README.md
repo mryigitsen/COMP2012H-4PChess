@@ -31,3 +31,5 @@ If you want to test the logic (no networking)
 * The tutorials that we used to learn Qt and Networking are
 * Game Programming using Qt 5 Beginner's Guide, Strakhov, Packt Publishing
 * https://www.youtube.com/watch?v=BSdKkZNEKlQ
+* The rules of the game were adopted from Chess.com's implementation
+* We also extensively used Qt's documentation sites for self-help.

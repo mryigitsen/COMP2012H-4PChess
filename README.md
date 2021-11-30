@@ -23,3 +23,11 @@ If you want to test the logic (no networking)
 2) Click on Online Game
 3) You'll be asked if you want to put any bots to the game. 
 4) You'll be greeted with the chess board.
+
+
+## Acknowledgements
+The chess pieces used were received from https://www.figma.com/file/BKcHIJHKvDL8hopfygWZzT/Chess-Simple-Assets-(Community)?node-id=2%3A331
+The random number generator is based on https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
+The tutorials that we used to learn Qt and Networking are
+* Game Programming using Qt 5 Beginner's Guide, Strakhov, Packt Publishing
+* https://www.youtube.com/watch?v=BSdKkZNEKlQ

@@ -26,8 +26,8 @@ If you want to test the logic (no networking)
 
 
 ## Acknowledgements
-The chess pieces used were received from https://www.figma.com/file/BKcHIJHKvDL8hopfygWZzT/Chess-Simple-Assets-(Community)?node-id=2%3A331
-The random number generator is based on https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
-The tutorials that we used to learn Qt and Networking are
-* Game Programming using Qt 5 Beginner's Guide, Strakhov, Packt Publishing
-* https://www.youtube.com/watch?v=BSdKkZNEKlQ
+* The chess pieces used were received from https://www.figma.com/file/BKcHIJHKvDL8hopfygWZzT/Chess-Simple-Assets-(Community)?node-id=2%3A331
+* The random number generator is based on https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
+* The tutorials that we used to learn Qt and Networking are
+** Game Programming using Qt 5 Beginner's Guide, Strakhov, Packt Publishing
+** https://www.youtube.com/watch?v=BSdKkZNEKlQ

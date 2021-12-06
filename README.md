@@ -1,5 +1,7 @@
 # FOUR PLAYER CHESS GAME
 
+## Introduction
+This project was completed in COMP 2012H - Honors Object Oriented Programming, Fall 2021 in the Hong Kong University of Science and Technology, as part of the course requirements. From time to time, I will return back to this to upgrade and improve - Yigit
 ### DISCLAIMER
 As our team mainly used Apple devices to develop this app, we weren't able to test the code on a Windows device. As a result, the graphics and the texts might not be fully shown on a Windows machine. 
 
